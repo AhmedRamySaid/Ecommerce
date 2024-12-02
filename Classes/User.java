@@ -6,4 +6,5 @@ abstract public class User {
     String username;
     String password;
     Date dateOfBirth;
+    int age;
 }
