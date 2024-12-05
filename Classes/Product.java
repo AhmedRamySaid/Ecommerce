@@ -2,7 +2,7 @@ package Classes;
 
 public class Product {
     private double price;
-    private String productCode;
+    private String productID;
     private String description;
     private Category category;
     //Constructor
@@ -10,10 +10,10 @@ public class Product {
         this(0,"NO_CODE","NO_DESCRIPTION");
     }
 
-    public Product(double price,String productCode,String description){
+    public Product(double price,String productID,String description){
         this.price = price;
         this.description = description;
-        this.productCode = productCode;
+        this.productID = productID;
     }
     //Setters and Getters
     public double getPrice() {
@@ -25,11 +25,11 @@ public class Product {
     }
 
     public String getProductCode() {
-        return productCode;
+        return productID;
     }
 
     public void setProductCode(String code) {
-        this.productCode = code;
+        this.productID = code;
     }
 
     public String getDescription() {
