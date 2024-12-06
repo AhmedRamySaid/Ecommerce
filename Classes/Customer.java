@@ -9,5 +9,5 @@ public class Customer extends User {
     }
 }
 enum Gender{
-    MAN, WOMAN
+    Man, Woman
 }
