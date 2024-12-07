@@ -39,4 +39,11 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+    void deleteProduct(){
+        this.description = null;
+        this.productID=null;
+        this.price = 0;
+        this.category=null;
+    }
+
 }

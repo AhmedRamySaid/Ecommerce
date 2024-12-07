@@ -12,9 +12,37 @@ public class Cart {
         this.totalPrice = 0;
     }
     //Setters and Getter
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
     //Methods
+
     //addItem
+    void addItem(Product product){
+        products.add(product);
+        this.updateTotal();
+    }
     //removeItem
-    //calculateTotal
+    void removeItem(int  index){
+        products.remove(index);
+        this.updateTotal();
+    }
+    //updateTotal
+    void updateTotal(){
+
+        for (Product product : products) {
+            totalPrice = 0;
+            totalPrice += product.getPrice();
+        }
+    }
     //clearCart
+    void clearCart(){
+        products.clear();
+        totalPrice = 0;
+    }
 }
