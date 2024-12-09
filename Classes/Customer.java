@@ -13,8 +13,8 @@ public class Customer extends User {
         this.gender = gender;
     }
 
-    public void Signup(String username, String password, Date dateOfBirth, Gender gender){
-        new Customer(username, password, dateOfBirth, gender);
+    public User Signup(String username, String password, Date dateOfBirth, Gender gender){
+        return new Customer(username, password, dateOfBirth, gender);
     }
     @Override
     public boolean IsAdmin(){

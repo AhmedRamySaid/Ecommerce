@@ -4,7 +4,7 @@ import java.util.Date;
 
 abstract public class User{
     String username;
-    String password;
+    private String password;
     Date dateOfBirth;
 
     User(){
@@ -16,11 +16,11 @@ abstract public class User{
         this.dateOfBirth = dateOfBirth;
         Database.addUser(this);
     }
-    User Login(String username, String password){
-        if (this.username.equals(username) && this.password.equals(password)){
-            return this;
-        }
-        System.out.println("Invalid Username or Password");
+    public static User Login(String username, String password){
+        User user = Database.getUser(username);
+        if (user == null){ System.out.println("Invalid username"); return null; }
+        if (user.password.equals(password)){ return user; }
+        System.out.println("Invalid password");
         return null;
     }
     abstract boolean IsAdmin();

@@ -1,19 +1,22 @@
 package Classes;
 
 public class Product {
+    private static int IDCounter = 11111;
     private double price;
-    private String productID;
+    private final int productID;
     private String description;
     private Category category;
     //Constructor
     public Product(){
-        this(0,"NO_CODE","NO_DESCRIPTION");
+        this(0,"NO_DESCRIPTION", null);
     }
 
-    public Product(double price,String productID,String description){
+    public Product(double price, String description, Category category){
         this.price = price;
         this.description = description;
-        this.productID = productID;
+        this.productID = IDCounter++;
+        this.category = category;
+        Database.addProduct(this);
     }
     //Setters and Getters
     public double getPrice() {
@@ -24,12 +27,8 @@ public class Product {
         this.price = price;
     }
 
-    public String getProductCode() {
+    public int getProductCode() {
         return productID;
-    }
-
-    public void setProductCode(String code) {
-        this.productID = code;
     }
 
     public String getDescription() {
@@ -38,5 +37,14 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public Category getCategory() {
+        return category;
+    }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    public int getID() {
+        return productID;
     }
 }
