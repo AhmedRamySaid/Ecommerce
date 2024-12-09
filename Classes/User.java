@@ -23,5 +23,9 @@ abstract public class User{
         System.out.println("Invalid password");
         return null;
     }
+    @Override
+    public String toString(){
+        return username;
+    }
     abstract boolean IsAdmin();
 }

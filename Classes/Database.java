@@ -30,6 +30,10 @@ public class Database {
             }
         }
     }
+    public static int getUserCount(){ return userCount; }
+    public static int getProductCount(){ return productCount; }
+    public static User[] getUserList(){ return userList; }
+    public static Product[] getProductList(){ return productList;}
     public static void addUser(User user){
         userList[userCount++] = user;
     }

@@ -20,6 +20,10 @@ public class Customer extends User {
     public boolean IsAdmin(){
         return false;
     }
+    @Override
+    public String toString(){
+        return "customer: "+super.toString();
+    }
 }
 enum Gender{
     Man, Woman

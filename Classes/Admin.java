@@ -11,6 +11,17 @@ public class Admin extends User implements AdminCRUD {
         Customer_Support
     }
 
+    @Override
+    public String toString(){
+        return "Admin " + super.toString();
+    }
+    public void ShowallUsers(){
+        User[] userlist = Database.getUserList();
+        for(int i = 0; i < Database.getUserCount(); i++){
+            System.out.println(userlist[i].toString());
+        }
+    }
+
     public void CreateProduct(){
         Database.addProduct(new Product());
     }
