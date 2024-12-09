@@ -3,9 +3,9 @@ package Classes;
 import java.util.Date;
 
 abstract public class User{
-    protected String username;
-    protected String password;
-    protected Date dateOfBirth;
+    private String username;
+    private String password;
+    private Date dateOfBirth;
 
     User(){
 
