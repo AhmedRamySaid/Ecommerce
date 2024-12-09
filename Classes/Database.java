@@ -7,9 +7,6 @@ public class Database {
     private static int productCount = 0;
 
     public static User getUser(User user, String username){
-        if (!user.IsAdmin()){
-            return null;
-        }
         for (int i = 0; i < userCount; i++){
             if(userList[i].username.equals(username)) { return user; }
         }
@@ -18,9 +15,6 @@ public class Database {
 
     //will return whatever it finds
     public static Product getProduct(User user, String productNameOrID){
-        if (!user.IsAdmin()){
-            return null;
-        }
         for (int i = 0; i < productCount; i++){
 
         }
