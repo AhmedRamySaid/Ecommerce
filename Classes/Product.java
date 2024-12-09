@@ -53,10 +53,4 @@ public class Product {
     public String toString(){
         return "Product Name: " + productname+ "\nProduct ID: " + productID;
     }
-    public void showallProduct(){
-        Product[] productlist = Database.getProductList();
-        for(int i=0;i<Database.getProductCount();i++){
-            System.out.println(productlist[i].toString());
-        }
-    }
 }

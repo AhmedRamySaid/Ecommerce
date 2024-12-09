@@ -3,9 +3,9 @@ package Classes;
 import java.util.Date;
 
 abstract public class User{
-    String username;
-    private String password;
-    Date dateOfBirth;
+    protected String username;
+    protected String password;
+    protected Date dateOfBirth;
 
     User(){
 
@@ -23,9 +23,12 @@ abstract public class User{
         System.out.println("Invalid password");
         return null;
     }
-    @Override
-    public String toString(){
+    public String getUsername(){
         return username;
     }
-    abstract boolean IsAdmin();
+    @Override
+    public String toString(){
+        return getUsername();
+    }
+    public abstract boolean IsAdmin();
 }

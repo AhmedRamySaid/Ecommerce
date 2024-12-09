@@ -1,25 +1,21 @@
 package Classes;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Admin extends User implements AdminCRUD {
-    double workingHours; //hours they work in a week
-    Role role;
+    private double workingHours; //hours they work in a week
+    private String role;
 
-    enum Role{
-        Manager,
-        Customer_Support
+    public Admin(String username, String password, Date dateOfBirth, String role, double workingHours) {
+        super(username, password, dateOfBirth);
+        this.role = role;
+        this.workingHours = workingHours;
+        Database.addUser(this);
     }
-
     @Override
     public String toString(){
         return "Admin " + super.toString();
-    }
-    public void ShowallUsers(){
-        User[] userlist = Database.getUserList();
-        for(int i = 0; i < Database.getUserCount(); i++){
-            System.out.println(userlist[i].toString());
-        }
     }
 
     public void CreateProduct(){
@@ -55,6 +51,30 @@ public class Admin extends User implements AdminCRUD {
     public void DeleteProduct(int productID){
         Database.removeProduct(productID);
     }
+    public void ShowAllProduct(){
+        Product[] productlist = Database.getProductList();
+        for(int i=0;i<Database.getProductCount();i++){
+            System.out.println(productlist[i].toString());
+        }
+    }
+    public void ShowAllOrders(){
+        Order[] orderlist = Database.getOrderList();
+        for(int i = 0; i < Database.getOrderCount(); i++){
+            System.out.println(orderlist[i].toString());
+        }
+    }
+    public void ShowAllUsers(){
+        User[] userlist = Database.getUserList();
+        for(int i = 0; i < Database.getUserCount(); i++){
+            System.out.println(userlist[i].toString());
+        }
+    }
+    public void CreateCategory(String name){
+        new Category(name);
+    }
+    public void DeleteCategory(String name){
+        Database.removeCategory(name);
+    }
 }
 interface AdminCRUD{
     void CreateProduct(double price, String description, Category category);
@@ -62,7 +82,9 @@ interface AdminCRUD{
     void EditProduct(int productID, String description);
     void EditProduct(int productID, Category category);
     void DeleteProduct(int ProductID);
-    //void CreateCategory();
-    //void EditCategory(Category category);
-    //void DeleteCategory(Category category);
+    void ShowAllOrders();
+    void ShowAllProduct();
+    void ShowAllUsers();
+    void CreateCategory(String name);
+    void DeleteCategory(String name);
 }
