@@ -5,6 +5,7 @@ public class Product {
     private String productID;
     private String description;
     private Category category;
+    private String productname;
     //Constructor
     public Product(){
         this(0,"NO_CODE","NO_DESCRIPTION");
@@ -38,5 +39,15 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    @Override
+    public String toString(){
+        return "Product Name: "+productname+"\nProduct ID: "+productID;
+    }
+    public void showallProduct(){
+        Product[] productlist = Database.getProductList();
+        for(int i=0;i<Database.getProductCount();i++){
+            System.out.println(productlist[i].toString());
+        }
     }
 }

@@ -12,7 +12,12 @@ public class Database {
         }
         return null;
     }
-
+    public static int getUserCount(){
+        return userCount;
+    }
+    public static int getProductCount(){
+        return productCount;
+    }
     //will return whatever it finds
     public static Product getProduct(User user, String productNameOrID){
         for (int i = 0; i < productCount; i++){
@@ -21,6 +26,8 @@ public class Database {
         return null;
     }
 
+    public static User[] getUserList(){ return userList; }
+    public static Product[] getProductList(){ return productList;}
     public static void addUser(User user){
         userList[userCount++] = user;
     }

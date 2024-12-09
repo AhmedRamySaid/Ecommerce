@@ -24,4 +24,9 @@ abstract public class User{
         return null;
     }
     abstract boolean IsAdmin();
+    @Override
+    public String toString(){
+        return username;
+    }
+
 }
