@@ -3,7 +3,7 @@ package Classes;
 public class Product {
     private static int IDCounter = 11111;
     private double price;
-    private final int productID;
+    private final String productID;
     private String description;
     private Category category;
     private String productname;
@@ -15,7 +15,7 @@ public class Product {
     public Product(double price, String description, Category category){
         this.price = price;
         this.description = description;
-        this.productID = IDCounter++;
+        this.productID = "PR" + IDCounter++;
         this.category = category;
         Database.addProduct(this);
     }
@@ -28,7 +28,7 @@ public class Product {
         this.price = price;
     }
 
-    public int getProductCode() {
+    public String getProductCode() {
         return productID;
     }
 
@@ -45,18 +45,9 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
-    public int getID() {
-        return productID;
-    }
 
     @Override
     public String toString(){
         return "Product Name: " + productname+ "\nProduct ID: " + productID;
-    }
-    public void showallProduct(){
-        Product[] productlist = Database.getProductList();
-        for(int i=0;i<Database.getProductCount();i++){
-            System.out.println(productlist[i].toString());
-        }
     }
 }

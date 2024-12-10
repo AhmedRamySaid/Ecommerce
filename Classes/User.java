@@ -3,9 +3,9 @@ package Classes;
 import java.util.Date;
 
 abstract public class User{
-    String username;
+    private String username;
     private String password;
-    Date dateOfBirth;
+    private Date dateOfBirth;
 
     User(){
 
@@ -23,9 +23,18 @@ abstract public class User{
         System.out.println("Invalid password");
         return null;
     }
-    @Override
-    public String toString(){
+    public String getUsername(){
         return username;
     }
-    abstract boolean IsAdmin();
+    @Override
+    public String toString(){
+        return getUsername();
+    }
+    public void ShowAllProduct(){
+        Product[] productlist = Database.getProductList();
+        for(int i=0;i<Database.getProductCount();i++){
+            System.out.println(productlist[i].toString());
+        }
+    }
+    public abstract boolean IsAdmin();
 }

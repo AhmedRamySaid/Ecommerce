@@ -8,11 +8,11 @@ public class Cart {
     private double totalPrice;
 
     //Constructor
-    public Cart() {
+    protected Cart() {
 
     }
 
-    public void addProduct(Product p) {
+    protected void addProduct(Product p) {
         products[count++] = p;
         this.updateTotal();
     }
@@ -32,9 +32,12 @@ public class Cart {
 
         }
     }
-    void clearCart(){
+    public void clearCart(){
         products = new Product[30];
         count = 0;
         totalPrice = 0;
+    }
+    public Product[] getProducts() {
+        return products;
     }
 }
