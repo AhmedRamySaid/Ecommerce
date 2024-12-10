@@ -36,5 +36,5 @@ abstract public class User{
             System.out.println(productlist[i].toString());
         }
     }
-    public abstract boolean IsAdmin();
+    public abstract boolean isAdmin();
 }

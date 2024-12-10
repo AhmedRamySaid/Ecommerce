@@ -21,7 +21,7 @@ public class Customer extends User {
         return new Customer(username, password, dateOfBirth, gender);
     }
     @Override
-    public boolean IsAdmin(){
+    public boolean isAdmin(){
         return false;
     }
     @Override
@@ -37,7 +37,13 @@ public class Customer extends User {
     public void AddToCart(String str){
         Product product = Database.getProduct(str);
         if (product == null) { System.out.println("This product does not exist"); return; }
-        cart.addProduct(product);
+        cart.addProduct(product.getProductID());
+    }
+    public void ViewCart(){
+        Product[] cartproducts = cart.getProducts();
+        for(int i = 0; i < cart.getCount(); i++){
+            System.out.println(cartproducts[i].toString());
+        }
     }
     public static Gender GetGender(String gender){
         if (gender.equals("1")){

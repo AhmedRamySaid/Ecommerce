@@ -1,22 +1,23 @@
 package Classes;
 
 public class Product {
-    private static int IDCounter = 11111;
+    private static int IDCounter = 100;
     private double price;
     private final String productID;
     private String description;
     private Category category;
-    private String productname;
+    private String productName;
     //Constructor
     public Product(){
-        this(0,"NO_DESCRIPTION", null);
+        this("", 0,"NO_DESCRIPTION", null);
     }
 
-    public Product(double price, String description, Category category){
+    public Product(String name, double price, String categoryID, String description){
+        productName = name;
         this.price = price;
         this.description = description;
-        this.productID = "PR" + IDCounter++;
-        this.category = category;
+        this.category = Database.getCategory(categoryID);
+        this.productID = "PR" + categoryID +IDCounter++;
         Database.addProduct(this);
     }
     //Setters and Getters
@@ -28,7 +29,7 @@ public class Product {
         this.price = price;
     }
 
-    public String getProductCode() {
+    public String getProductID() {
         return productID;
     }
 
@@ -45,9 +46,11 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
-
+    public String getProductName() {
+        return productName;
+    }
     @Override
     public String toString(){
-        return "Product Name: " + productname+ "\nProduct ID: " + productID;
+        return "Product Name: " + productName + "\nProduct ID: " + productID;
     }
 }
