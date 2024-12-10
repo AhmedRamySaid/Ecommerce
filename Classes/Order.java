@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Order {
     //Attributes
     private static int orderNo  = 1000;
+    private final int noOfProducts;
     private final String orderID;
     private OrderStatus orderStatus;
     private PaymentMethod paymentMethod;
@@ -16,28 +17,31 @@ public class Order {
 
     public enum OrderStatus {
         PENDING,
-        SHIPPED,
-        DELIVERED,
-        CANCELLED
+        CANCELLED,
+        DELIVERED
     }
 
     public enum PaymentMethod {
         CREDIT_CARD,
+        DEBIT_CARD,
         CASH_APP,
         CASH_ON_DELIVERY
     }
     //Constructors
-    public Order(PaymentMethod paymentmethod, String shippingaddress, Customer customer){
+    public Order(int paymentmethod, String shippingaddress, Customer customer){
         if (shippingaddress != null) shippingAddress = shippingaddress;
         else shippingAddress = customer.getAddress();
-        paymentMethod = paymentmethod;
-        shippingCost = CalculateShipping();
+        setPaymentMethod(paymentmethod);
+        SetShippingCost(10);
         totalCost = CalculateTotal();
         this.customer = customer;
-        products = customer.getCart().getProducts();
-        orderStatus = OrderStatus.PENDING;
+        noOfProducts = customer.getCart().getCount();
+        products = Product.CopyProductList(customer.getCart().getProducts(), noOfProducts);
+        setOrderStatus(1); //Pending
 
+        Database.addOrder(this);
         orderID = "OR" + orderNo++;
+        System.out.println("Your order's ID is " + orderID);
     }
 
     public String getOrderID() {
@@ -48,10 +52,38 @@ public class Order {
         return orderStatus;
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setOrderStatus(int orderstatus) {
+        switch (orderstatus) {
+            case 1:
+                orderStatus = OrderStatus.PENDING;
+                break;
+            case 2:
+                orderStatus = OrderStatus.CANCELLED;
+                break;
+            case 3:
+                orderStatus = OrderStatus.DELIVERED;
+                break;
+        }
     }
-
+    public void setPaymentMethod(int paymentmethod) {
+        switch (paymentmethod) {
+            case 1:
+                paymentMethod = PaymentMethod.CREDIT_CARD;
+                break;
+            case 2:
+                paymentMethod = PaymentMethod.DEBIT_CARD;
+                break;
+            case 3:
+                paymentMethod = PaymentMethod.CASH_APP;
+                break;
+            case 4:
+                paymentMethod = PaymentMethod.CASH_ON_DELIVERY;
+                break;
+            default:
+                System.out.println("Invalid payment method");
+                break;
+        }
+    }
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
@@ -60,8 +92,9 @@ public class Order {
         return shippingCost;
     }
 
-    public int CalculateShipping() {
-        return 10;
+    public void SetShippingCost(int shippingcost) {
+        if(shippingcost < 0) { return; }
+        shippingCost = shippingcost;
     }
 
     public Customer getCustomer() {
@@ -80,13 +113,15 @@ public class Order {
         return shippingAddress;
     }
 
-    public void setShippingAddress(String shippingAddress) {
-        this.shippingAddress = shippingAddress;
-    }
-
     @Override
     public String toString(){
         return "Customer name: " + customer.getUsername() + "\nOrder ID: "+ orderID +"\nAddress: " + shippingAddress +
-                "\nTotal Amount: " + totalCost + "\nPayment Method: "+ paymentMethod + "Order Statues" + orderStatus;
+                "\nTotal Amount: " + totalCost + "\nPayment Method: "+ paymentMethod + "\nOrder Statues" + orderStatus;
+    }
+    public void PrintOrder(){
+        System.out.println(this.toString());
+        for(int i = 0; i <noOfProducts; i++){
+            System.out.println("1. " + this.toString() + "products: " + products[i].toString() + "\n");
+        }
     }
 }

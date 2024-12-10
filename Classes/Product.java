@@ -8,6 +8,13 @@ public class Product {
     private Category category;
     private final String productName;
     //Constructor
+    private Product(Product p){
+        this.price = p.getPrice();
+        this.productID = p.getProductID();
+        this.description = p.getDescription();
+        this.category = p.getCategory();
+        this.productName = p.getProductName();
+    }
     public Product(){
         this("", 0,new Category(""), null);
     }
@@ -49,9 +56,16 @@ public class Product {
     public String getProductName() {
         return productName;
     }
+    public static Product[] CopyProductList(Product[] products, int size){
+        Product[] p = new Product[size];
+        for(int i = 0; i < size; i++){
+            p[i] = new Product(products[i]);
+        }
+        return p;
+    }
     @Override
     public String toString(){
-        return "Product name: " + productName + "\nProduct ID: " + productID + "\nProduct cost: " + price +
-                "$\nProduct description: " + description + "\nProduct category: " + category.getName();
+        return "\nProduct name: " + productName + "\nProduct ID: " + productID + "\nProduct cost: " + price +
+                "$\nProduct description: " + description + "\nProduct category: " + category.getName() + "\n";
     }
 }

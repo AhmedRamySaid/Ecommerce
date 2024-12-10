@@ -1,20 +1,17 @@
 package Classes;
 
-import java.io.Serializable;
-import java.util.Date;
-
 public class Admin extends User implements AdminCRUD {
     private double workingHours; //hours they work in a week
     private String role;
 
-    public Admin(String username, String password, Date dateOfBirth, String role, double workingHours) {
+    public Admin(String username, String password, String dateOfBirth, String role, double workingHours) {
         super(username, password, dateOfBirth);
         this.role = role;
         this.workingHours = workingHours;
     }
     @Override
     public String toString(){
-        return "Account type: Admin\n" + super.toString();
+        return "\nAccount type: Admin" + super.toString() + "Role: " + role + "\nWorkingHours: " + workingHours;
     }
 
     @Override
@@ -37,22 +34,33 @@ public class Admin extends User implements AdminCRUD {
         System.out.println("Success! Category ID: " + c.getID());
     }
     @Override
-    public void EditProduct(String productID, double price){
+    public void EditProduct (String productID, String price_description_category, int choice){
         Product p = Database.getProduct(productID);
         if (p == null) { System.out.println("Product not found"); return; }
-        p.setPrice(price);
-    }
-    @Override
-    public void EditProduct (String productID, String description){
-        Product p = Database.getProduct(productID);
-        if (p == null) { System.out.println("Product not found"); return; }
-        p.setDescription(description);
-    }
-    @Override
-    public void EditProduct(String productID, Category category){
-        Product p = Database.getProduct(productID);
-        if (p == null) { System.out.println("Product not found"); return; }
-        p.setCategory(category);
+        switch (choice) {
+            case 1:
+                try {
+                    p.setPrice(Double.parseDouble(price_description_category));
+                    System.out.println("Price changed successfully");
+                }
+                catch (NumberFormatException e) {
+                    System.out.println("Error. Price not valid");
+                }
+                break;
+            case 2:
+                p.setDescription(price_description_category);
+                System.out.println("Description changed successfully");
+                break;
+            case 3:
+                Category c = Database.getCategory(price_description_category);
+                if (c == null) { System.out.println("Category not found"); return; }
+                p.setCategory(c);
+                System.out.println("Category changed successfully");
+                break;
+            default:
+                System.out.println("Error. Choice not valid");
+                break;
+        }
     }
     @Override
     public void DeleteProduct(String productID){
@@ -66,7 +74,7 @@ public class Admin extends User implements AdminCRUD {
     public void ShowAllOrders(){
         Order[] orderlist = Database.getOrderList();
         for(int i = 0; i < Database.getOrderCount(); i++){
-            System.out.println(orderlist[i].toString());
+            orderlist[i].PrintOrder();
         }
     }
     @Override
@@ -83,13 +91,11 @@ public class Admin extends User implements AdminCRUD {
 }
 interface AdminCRUD{
     void CreateProduct(String name, double price, String categoryID, String description);
-    void EditProduct(String productID, double price);
-    void EditProduct(String productID, String description);
-    void EditProduct(String productID, Category category);
+    void EditProduct(String productID, String price_description_category, int choice);
     void DeleteProduct(String ProductID);
     void ShowAllOrders();
-    void ShowAllProduct();
     void ShowAllUsers();
     void CreateCategory(String name);
     void DeleteCategory(String name);
+    //void ShowAllProducts(); inside the parent class
 }
