@@ -61,9 +61,11 @@ public class Customer extends User {
     }
     public void ViewCart(){
         Product[] cartproducts = cart.getProducts();
+        if(cartproducts[0] == null) { System.out.println("Your cart is empty"); return; }
         for(int i = 0; i < cart.getCount(); i++){
-            System.out.println(cartproducts[i].toString());
+            System.out.println("\n" + (i+1) + ". Name: " + cartproducts[i].getProductName() + "ID: " + cartproducts[i].getProductID());
         }
+        System.out.println("Total price: " + cart.getTotalPrice() + "\n");
     }
     public void Checkout(int paymentmethod, String address){
         Order order = new Order(paymentmethod, address, this);

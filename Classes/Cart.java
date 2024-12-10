@@ -16,19 +16,25 @@ public class Cart {
     public int getCount() {
         return count;
     }
+    public double getTotalPrice() {
+        return totalPrice;
+    }
     public void addProduct(String productID) {
         Product product = Database.getProduct(productID);
         if(product == null) { System.out.println("Product does not exist"); return; }
         products[count++] = product;
         totalPrice += product.getPrice();
+        System.out.println("Added " + product.getProductName() + " successfully");
     }
     public void removeProduct(int index) {
-        totalPrice -= products[index].getPrice();
         if (index-- > count) { System.out.println("Invalid index"); return; }
+        System.out.println("Removed " + products[index].getProductName() + " successfully");
+        totalPrice -= products[index].getPrice();
         products[index] = null;
         for (int i = index; i < count; i++) {
             products[i] = products[i + 1];
         }
+        count--;
     }
     public void clearCart(){
         products = new Product[30];

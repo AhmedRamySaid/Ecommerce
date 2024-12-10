@@ -75,6 +75,10 @@ public class Main {
 
     public static boolean UserInteraction(){
         Customer customer = (Customer)currentUser;
+
+        System.out.print("Press enter to continue");
+        sc.nextLine();
+
         System.out.println("\n1. View Products");
         System.out.println("2. Add to Cart");
         System.out.println("3. Remove from Cart");
@@ -162,6 +166,9 @@ public class Main {
 
     private static boolean AdminInteraction() {
         Admin admin = (Admin)currentUser;
+
+        System.out.print("Press enter to continue");
+        sc.nextLine();
 
         System.out.println("\n1. Create a product");
         System.out.println("2. Edit a product");
