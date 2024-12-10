@@ -35,24 +35,47 @@ public class Admin extends User implements AdminCRUD {
         Category c = new Category(name);
         System.out.println("Success! Category ID: " + c.getID());
     }
+//    @Override
+//    public void EditProduct(String productID, double price){
+//        Product p = Database.getProduct(productID);
+//        if (p == null) { System.out.println("Product not found"); return; }
+//        p.setPrice(price);
+//    }
     @Override
-    public void EditProduct(String productID, double price){
+    public void EditProduct (String productID, String price_description_category, int choice){
         Product p = Database.getProduct(productID);
         if (p == null) { System.out.println("Product not found"); return; }
-        p.setPrice(price);
+        switch (choice) {
+            case 1:
+                try {
+                    p.setPrice(Double.parseDouble(price_description_category));
+                    System.out.println("Price changed successfully");
+                }
+                catch (NumberFormatException e) {
+                    System.out.println("Error. Price not valid");
+                }
+                break;
+            case 2:
+                p.setDescription(price_description_category);
+                System.out.println("Description changed successfully");
+                break;
+            case 3:
+                Category c = Database.getCategory(price_description_category);
+                if (c == null) { System.out.println("Category not found"); return; }
+                p.setCategory(c);
+                System.out.println("Category changed successfully");
+                break;
+            default:
+                System.out.println("Error. Choice not valid");
+                break;
+        }
     }
-    @Override
-    public void EditProduct (String productID, String description){
-        Product p = Database.getProduct(productID);
-        if (p == null) { System.out.println("Product not found"); return; }
-        p.setDescription(description);
-    }
-    @Override
-    public void EditProduct(String productID, Category category){
-        Product p = Database.getProduct(productID);
-        if (p == null) { System.out.println("Product not found"); return; }
-        p.setCategory(category);
-    }
+//    @Override
+//    public void EditProduct(String productID, Category category){
+//        Product p = Database.getProduct(productID);
+//        if (p == null) { System.out.println("Product not found"); return; }
+//        p.setCategory(category);
+//    }
     @Override
     public void DeleteProduct(String productID){
         Product p = Database.getProduct(productID);
@@ -82,9 +105,7 @@ public class Admin extends User implements AdminCRUD {
 }
 interface AdminCRUD{
     void CreateProduct(String name, double price, String categoryID, String description);
-    void EditProduct(String productID, double price);
-    void EditProduct(String productID, String description);
-    void EditProduct(String productID, Category category);
+    void EditProduct(String productID, String price_description_category, int choice);
     void DeleteProduct(String ProductID);
     void ShowAllOrders();
     void ShowAllProducts();

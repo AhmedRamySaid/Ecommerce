@@ -165,12 +165,13 @@ public class Main {
         Admin admin = (Admin)currentUser;
 
         System.out.println("\n1. Create a product");
-        System.out.println("2. Delete a product");
-        System.out.println("3. Create a category");
-        System.out.println("4. Delete a category");
-        System.out.println("5. Show all");
-        System.out.println("6. logout");
-        System.out.println("7. Exit");
+        System.out.println("2. Edit a product");
+        System.out.println("3. Delete a product");
+        System.out.println("4. Create a category");
+        System.out.println("5. Delete a category");
+        System.out.println("6. Show all");
+        System.out.println("7. logout");
+        System.out.println("8. Exit");
         System.out.print("Please select an option: ");
 
         String choice = sc.nextLine();
@@ -194,16 +195,32 @@ public class Main {
                 break;
             case "2":
                 System.out.print("Enter product code: ");
-                admin.DeleteProduct(sc.nextLine());
+                String code = sc.nextLine();
+                System.out.println("Press 1 to edit price. Press 2 to edit description. Press 3 to change the category");
+                int i = 0;
+                try{
+                    i = sc.nextInt();
+                }
+                catch(Exception e){
+                    System.out.println("Invalid input");
+                    break;
+                }
+                System.out.println("Enter the new price/new description/new category ID");
+                String line = sc.nextLine();
+                admin.EditProduct(code,line,i);
                 break;
             case "3":
+                System.out.print("Enter product code: ");
+                admin.DeleteProduct(sc.nextLine());
+                break;
+            case "4":
                 System.out.print("Enter category name: ");
                 admin.CreateCategory(sc.nextLine());
                 break;
-            case "4":
+            case "5":
                 System.out.print("Enter category code: ");
                 admin.DeleteCategory(sc.nextLine());
-            case "5":
+            case "6":
                 System.out.println("1. Show all users");
                 System.out.println("2. Show all products");
                 System.out.println("3. Show all orders");
@@ -220,10 +237,10 @@ public class Main {
                         break;
                 }
                 break;
-            case "6":
+            case "7":
                 currentUser = null;
                 break;
-            case "7":
+            case "8":
                 System.out.println("Goodbye!");
                 currentUser = null;
                 return false;
