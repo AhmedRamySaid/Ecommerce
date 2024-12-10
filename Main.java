@@ -28,7 +28,7 @@ public class Main {
         User currentUser = null;
 
         while(currentUser == null) {
-            System.out.println("Press 1 to login. Press 2 to register. Press 3 to exit");
+            System.out.println("\nPress 1 to login. Press 2 to register. Press 3 to exit");
             String st = sc.nextLine();
             switch(st) {
                 case "1":
@@ -62,7 +62,7 @@ public class Main {
 
     public static void UserInteraction(){
         Customer customer = (Customer)currentUser;
-        System.out.println("1. View Products");
+        System.out.println("\n1. View Products");
         System.out.println("2. Add Product to Cart");
         System.out.println("3. View Cart");
         System.out.println("4. Checkout");
@@ -103,11 +103,13 @@ public class Main {
     private static void AdminInteraction() {
         Admin admin = (Admin)currentUser;
 
-        System.out.println("1. Create a product");
+        System.out.println("\n1. Create a product");
         System.out.println("2. Delete a product");
         System.out.println("3. Create a category");
-        System.out.println("5. logout");
-        System.out.println("6. Exit");
+        System.out.println("4. Delete a category");
+        System.out.println("5. Show all");
+        System.out.println("6. logout");
+        System.out.println("7. Exit");
         System.out.print("Please select an option: ");
 
         String choice = sc.nextLine();
@@ -124,7 +126,7 @@ public class Main {
                 sc.nextLine();
                 System.out.print("Enter product description: ");
                 String description = sc.nextLine();
-                System.out.println("Product code: " + admin.CreateProduct(name, price, category, description)); }
+                admin.CreateProduct(name, price, category, description); }
                 catch (Exception e){
                     System.out.println("Error. Try again");
                 }
@@ -135,12 +137,32 @@ public class Main {
                 break;
             case "3":
                 System.out.print("Enter category name: ");
-                System.out.println("Category ID: " + admin.CreateCategory(sc.nextLine()));
+                admin.CreateCategory(sc.nextLine());
                 break;
+            case "4":
+                System.out.print("Enter category code: ");
+                admin.DeleteCategory(sc.nextLine());
             case "5":
-                currentUser = null;
+                System.out.println("1. Show all users");
+                System.out.println("2. Show all products");
+                System.out.println("3. Show all orders");
+                String st = sc.nextLine();
+                switch (st){
+                    case "1":
+                        admin.ShowAllUsers();
+                        break;
+                    case "2":
+                        admin.ShowAllProduct();
+                        break;
+                    case "3":
+                        admin.ShowAllOrders();
+                        break;
+                }
                 break;
             case "6":
+                currentUser = null;
+                break;
+            case "7":
                 System.out.println("Goodbye!");
                 return;
             default:

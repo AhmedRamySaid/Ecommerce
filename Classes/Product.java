@@ -6,18 +6,18 @@ public class Product {
     private final String productID;
     private String description;
     private Category category;
-    private String productName;
+    private final String productName;
     //Constructor
     public Product(){
-        this("", 0,"NO_DESCRIPTION", null);
+        this("", 0,new Category(""), null);
     }
 
-    public Product(String name, double price, String categoryID, String description){
+    public Product(String name, double price, Category category, String description){
         productName = name;
         this.price = price;
         this.description = description;
-        this.category = Database.getCategory(categoryID);
-        this.productID = "PR" + categoryID +IDCounter++;
+        this.category = category;
+        this.productID = "PR" + category.getID() +IDCounter++;
         Database.addProduct(this);
     }
     //Setters and Getters
@@ -51,6 +51,7 @@ public class Product {
     }
     @Override
     public String toString(){
-        return "Product Name: " + productName + "\nProduct ID: " + productID;
+        return "Product name: " + productName + "\nProduct ID: " + productID + "\nProduct cost: " + price +
+                "$\nProduct description: " + description + "\nProduct category: " + category.getName();
     }
 }

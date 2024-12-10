@@ -11,11 +11,10 @@ public class Admin extends User implements AdminCRUD {
         super(username, password, dateOfBirth);
         this.role = role;
         this.workingHours = workingHours;
-        Database.addUser(this);
     }
     @Override
     public String toString(){
-        return "Admin " + super.toString();
+        return "Account type: Admin\n" + super.toString();
     }
 
     @Override
@@ -23,12 +22,19 @@ public class Admin extends User implements AdminCRUD {
         return true;
     }
     @Override
-    public String CreateProduct(String name, double price, String categoryID, String description){
-        return new Product(name, price, categoryID, description).getProductID();
+    public void CreateProduct(String name, double price, String categoryID, String description){
+        Category category = Database.getCategory(categoryID);
+        if (category == null) {
+            System.out.println("Error. Category not found");
+            return;
+        }
+        Product p = new Product(name, price, category, description);
+        System.out.println("Success! Product ID: " + p.getProductID());
     }
     @Override
-    public String CreateCategory(String name){
-        return new Category(name).getID();
+    public void CreateCategory(String name){
+        Category c = new Category(name);
+        System.out.println("Success! Category ID: " + c.getID());
     }
     @Override
     public void EditProduct(String productID, double price){
@@ -76,7 +82,7 @@ public class Admin extends User implements AdminCRUD {
     }
 }
 interface AdminCRUD{
-    String CreateProduct(String name, double price, String categoryID, String description);
+    void CreateProduct(String name, double price, String categoryID, String description);
     void EditProduct(String productID, double price);
     void EditProduct(String productID, String description);
     void EditProduct(String productID, Category category);
@@ -84,6 +90,6 @@ interface AdminCRUD{
     void ShowAllOrders();
     void ShowAllProduct();
     void ShowAllUsers();
-    String CreateCategory(String name);
+    void CreateCategory(String name);
     void DeleteCategory(String name);
 }

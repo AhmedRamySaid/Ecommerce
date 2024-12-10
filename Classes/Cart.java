@@ -17,9 +17,10 @@ public class Cart {
         return count;
     }
     public void addProduct(String productID) {
-        if(Database.getProduct(productID) == null) { return; }
-        products[count++] = Database.getProduct(productID);
-        totalPrice += Database.getProduct(productID).getPrice();
+        Product product = Database.getProduct(productID);
+        if(product == null) { System.out.println("Product does not exist"); return; }
+        products[count++] = product;
+        totalPrice += product.getPrice();
     }
     public void removeProduct(int index) {
         totalPrice -= products[index].getPrice();

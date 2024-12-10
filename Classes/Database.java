@@ -1,10 +1,10 @@
 package Classes;
 
 public class Database {
-    private static Order[] orderList = new Order[1024];
-    private static Product[] productList = new Product[1024];
-    private static User[] userList = new User[1048576];
-    private static Category[] categoryList = new Category[128];
+    private static final Order[] orderList = new Order[1024]; //final here means that the variable cannot refer to another object
+    private static final Product[] productList = new Product[1024];
+    private static final User[] userList = new User[1048576];
+    private static final Category[] categoryList = new Category[128];
     private static int userCount = 0;
     private static int productCount = 0;
     private static int orderCount = 0;

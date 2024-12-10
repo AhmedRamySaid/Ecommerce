@@ -26,7 +26,7 @@ public class Customer extends User {
     }
     @Override
     public String toString(){
-        return "customer: "+super.toString();
+        return "Account type: Customer\n" + super.toString();
     }
     public String getAddress(){
         return address;
