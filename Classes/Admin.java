@@ -1,7 +1,5 @@
 package Classes;
 
-import java.io.Serializable;
-
 public class Admin extends User implements AdminCRUD {
     private double workingHours; //hours they work in a week
     private String role;
@@ -13,7 +11,7 @@ public class Admin extends User implements AdminCRUD {
     }
     @Override
     public String toString(){
-        return "Account type: Admin\n" + super.toString();
+        return "\nAccount type: Admin" + super.toString() + "Role: " + role + "\nWorkingHours: " + workingHours;
     }
 
     @Override
@@ -35,12 +33,6 @@ public class Admin extends User implements AdminCRUD {
         Category c = new Category(name);
         System.out.println("Success! Category ID: " + c.getID());
     }
-//    @Override
-//    public void EditProduct(String productID, double price){
-//        Product p = Database.getProduct(productID);
-//        if (p == null) { System.out.println("Product not found"); return; }
-//        p.setPrice(price);
-//    }
     @Override
     public void EditProduct (String productID, String price_description_category, int choice){
         Product p = Database.getProduct(productID);
@@ -70,12 +62,6 @@ public class Admin extends User implements AdminCRUD {
                 break;
         }
     }
-//    @Override
-//    public void EditProduct(String productID, Category category){
-//        Product p = Database.getProduct(productID);
-//        if (p == null) { System.out.println("Product not found"); return; }
-//        p.setCategory(category);
-//    }
     @Override
     public void DeleteProduct(String productID){
         Product p = Database.getProduct(productID);
@@ -108,8 +94,8 @@ interface AdminCRUD{
     void EditProduct(String productID, String price_description_category, int choice);
     void DeleteProduct(String ProductID);
     void ShowAllOrders();
-    void ShowAllProducts();
     void ShowAllUsers();
     void CreateCategory(String name);
     void DeleteCategory(String name);
+    //void ShowAllProducts(); inside the parent class
 }

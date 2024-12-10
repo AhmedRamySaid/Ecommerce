@@ -1,6 +1,5 @@
 import Classes.*;
 
-import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -100,14 +99,14 @@ public class Main {
                 break;
             case "3":
                 System.out.print("Please enter the number of the item you want to remove: ");
-                int num = 0;
                 try {
-                    num = sc.nextInt();
+                    int num = sc.nextInt();
                     sc.nextLine();
+                    customer.getCart().removeProduct(num);
                 } catch (Exception e) {
                     System.out.println("Invalid number");
                 }
-                customer.getCart().removeProduct(num);
+                break;
             case "4":
                 customer.ViewCart();
                 break;
@@ -197,7 +196,7 @@ public class Main {
                 System.out.print("Enter product code: ");
                 String code = sc.nextLine();
                 System.out.println("Press 1 to edit price. Press 2 to edit description. Press 3 to change the category");
-                int i = 0;
+                int i;
                 try{
                     i = sc.nextInt();
                 }
