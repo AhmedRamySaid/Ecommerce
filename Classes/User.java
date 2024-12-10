@@ -30,5 +30,11 @@ abstract public class User{
     public String toString(){
         return getUsername();
     }
+    public void ShowAllProduct(){
+        Product[] productlist = Database.getProductList();
+        for(int i=0;i<Database.getProductCount();i++){
+            System.out.println(productlist[i].toString());
+        }
+    }
     public abstract boolean IsAdmin();
 }

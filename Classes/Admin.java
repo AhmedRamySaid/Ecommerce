@@ -18,9 +18,6 @@ public class Admin extends User implements AdminCRUD {
         return "Admin " + super.toString();
     }
 
-    public void CreateProduct(){
-        Database.addProduct(new Product());
-    }
     @Override
     public boolean IsAdmin(){
         return true;
@@ -30,32 +27,26 @@ public class Admin extends User implements AdminCRUD {
         new Product(price, description, category);
     }
     @Override
-    public void EditProduct(int productID, double price){
+    public void EditProduct(String productID, double price){
         Product p = Database.getProduct(productID);
         if (p == null) { System.out.println("Product not found"); return; }
         p.setPrice(price);
     }
     @Override
-    public void EditProduct (int productID, String description){
+    public void EditProduct (String productID, String description){
         Product p = Database.getProduct(productID);
         if (p == null) { System.out.println("Product not found"); return; }
         p.setDescription(description);
     }
     @Override
-    public void EditProduct(int productID, Category category){
+    public void EditProduct(String productID, Category category){
         Product p = Database.getProduct(productID);
         if (p == null) { System.out.println("Product not found"); return; }
         p.setCategory(category);
     }
     @Override
-    public void DeleteProduct(int productID){
+    public void DeleteProduct(String productID){
         Database.removeProduct(productID);
-    }
-    public void ShowAllProduct(){
-        Product[] productlist = Database.getProductList();
-        for(int i=0;i<Database.getProductCount();i++){
-            System.out.println(productlist[i].toString());
-        }
     }
     public void ShowAllOrders(){
         Order[] orderlist = Database.getOrderList();
@@ -78,10 +69,10 @@ public class Admin extends User implements AdminCRUD {
 }
 interface AdminCRUD{
     void CreateProduct(double price, String description, Category category);
-    void EditProduct(int productID, double price);
-    void EditProduct(int productID, String description);
-    void EditProduct(int productID, Category category);
-    void DeleteProduct(int ProductID);
+    void EditProduct(String productID, double price);
+    void EditProduct(String productID, String description);
+    void EditProduct(String productID, Category category);
+    void DeleteProduct(String ProductID);
     void ShowAllOrders();
     void ShowAllProduct();
     void ShowAllUsers();

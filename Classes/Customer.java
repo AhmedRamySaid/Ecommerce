@@ -34,6 +34,11 @@ public class Customer extends User {
     public Cart getCart() {
         return cart;
     }
+    public void AddToCart(String str){
+        Product product = Database.getProduct(str);
+        if (product == null) { System.out.println("This product does not exist"); return; }
+        cart.addProduct(product);
+    }
     public static Gender GetGender(String gender){
         if (gender.equals("1")){
             return Gender.Man;
