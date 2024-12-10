@@ -5,10 +5,10 @@ abstract public class User{
     private String password;
     private String dateOfBirth;
 
-    User(){
+    Protected User(){
 
     }
-    User(String username, String password, String dateOfBirth){
+    Protected User(String username, String password, String dateOfBirth){
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
