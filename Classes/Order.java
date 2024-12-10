@@ -28,7 +28,7 @@ public class Order {
     }
     //Constructors
     public Order(PaymentMethod paymentmethod, String shippingaddress, Customer customer){
-        if (shippingAddress != null) shippingAddress = shippingaddress;
+        if (shippingaddress != null) shippingAddress = shippingaddress;
         else shippingAddress = customer.getAddress();
         paymentMethod = paymentmethod;
         shippingCost = CalculateShipping();

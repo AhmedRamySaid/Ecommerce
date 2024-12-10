@@ -11,20 +11,30 @@ public class Admin extends User implements AdminCRUD {
         super(username, password, dateOfBirth);
         this.role = role;
         this.workingHours = workingHours;
-        Database.addUser(this);
     }
     @Override
     public String toString(){
-        return "Admin " + super.toString();
+        return "Account type: Admin\n" + super.toString();
     }
 
     @Override
-    public boolean IsAdmin(){
+    public boolean isAdmin(){
         return true;
     }
     @Override
-    public void CreateProduct(double price, String description, Category category){
-        new Product(price, description, category);
+    public void CreateProduct(String name, double price, String categoryID, String description){
+        Category category = Database.getCategory(categoryID);
+        if (category == null) {
+            System.out.println("Error. Category not found");
+            return;
+        }
+        Product p = new Product(name, price, category, description);
+        System.out.println("Success! Product ID: " + p.getProductID());
+    }
+    @Override
+    public void CreateCategory(String name){
+        Category c = new Category(name);
+        System.out.println("Success! Category ID: " + c.getID());
     }
     @Override
     public void EditProduct(String productID, double price){
@@ -46,29 +56,33 @@ public class Admin extends User implements AdminCRUD {
     }
     @Override
     public void DeleteProduct(String productID){
+        Product p = Database.getProduct(productID);
+        if (p == null) { System.out.println("Product not found"); return; }
+        String st = p.getProductName();
         Database.removeProduct(productID);
+        System.out.println("Deleted product: " + st);
     }
+    @Override
     public void ShowAllOrders(){
         Order[] orderlist = Database.getOrderList();
         for(int i = 0; i < Database.getOrderCount(); i++){
             System.out.println(orderlist[i].toString());
         }
     }
+    @Override
     public void ShowAllUsers(){
         User[] userlist = Database.getUserList();
         for(int i = 0; i < Database.getUserCount(); i++){
             System.out.println(userlist[i].toString());
         }
     }
-    public void CreateCategory(String name){
-        new Category(name);
-    }
+    @Override
     public void DeleteCategory(String name){
         Database.removeCategory(name);
     }
 }
 interface AdminCRUD{
-    void CreateProduct(double price, String description, Category category);
+    void CreateProduct(String name, double price, String categoryID, String description);
     void EditProduct(String productID, double price);
     void EditProduct(String productID, String description);
     void EditProduct(String productID, Category category);

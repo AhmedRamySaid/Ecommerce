@@ -28,7 +28,7 @@ abstract public class User{
     }
     @Override
     public String toString(){
-        return getUsername();
+        return "Username: " + username + "\nDate of birth: " + dateOfBirth;
     }
     public void ShowAllProduct(){
         Product[] productlist = Database.getProductList();
@@ -36,5 +36,5 @@ abstract public class User{
             System.out.println(productlist[i].toString());
         }
     }
-    public abstract boolean IsAdmin();
+    public abstract boolean isAdmin();
 }
