@@ -24,9 +24,11 @@ public class Cart {
         if(product == null) { System.out.println("Product does not exist"); return; }
         products[count++] = product;
         totalPrice += product.getPrice();
+        System.out.println("Added " + product.getProductName() + " successfully");
     }
     public void removeProduct(int index) {
         if (index-- > count) { System.out.println("Invalid index"); return; }
+        System.out.println("Removed " + products[index].getProductName() + " successfully");
         totalPrice -= products[index].getPrice();
         products[index] = null;
         for (int i = index; i < count; i++) {
