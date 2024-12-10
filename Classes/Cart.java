@@ -36,11 +36,6 @@ public class Cart {
         }
         count--;
     }
-    public void clearCart(){
-        products = new Product[30];
-        count = 0;
-        totalPrice = 0;
-    }
     public Product[] getProducts() {
         return products;
     }
