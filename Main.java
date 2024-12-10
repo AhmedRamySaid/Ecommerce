@@ -7,18 +7,27 @@ public class Main {
     public static User currentUser = null;
     public static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
-        Customer.Register("Ramy", "1610", new Date(), Customer.GetGender("1"));
-        new Admin("Kareem", "1610", new Date(), "Engineer", 40);
-        new Admin("Hager", "1610", new Date(), "Engineer", 40);
+        //dummy data
+        Customer.Register("Ramy", "1610", "16/10/2006", Customer.GetGender("1"));
+        new Admin("Kareem", "1610", "10/5/2004", "Engineer", 40);
+        new Admin("Hager", "1610", "21/7/2004", "Engineer", 40);
+        new Category("Electronics");
+        new Category("Pet supplies");
+        new Product("IPhone", 200, Database.getCategory("CTG100"),"This is an IPhone 15");
+        new Product("Samsung TV", 2000, Database.getCategory("CTG100"),"This is a big Samsung TV");
+        new Product("Cat food", 10, Database.getCategory("CTG101"),"The perfect meal for your cat!");
 
-        while (true) {
+        boolean UsingApplication = true;
+
+        while (UsingApplication) {
             currentUser = LoginAndRegister();
+            if (currentUser == null) { UsingApplication = false; }
             while (currentUser != null) {
                 if(currentUser.isAdmin()){
-                    AdminInteraction();
+                    UsingApplication = AdminInteraction();
                 }
                 else if (currentUser != null){
-                    UserInteraction();
+                    UsingApplication = UserInteraction();
                 }
             }
         }
@@ -49,8 +58,13 @@ public class Main {
                         System.out.print("Please enter a valid number: ");
                         gender = sc.nextLine();
                     }
-                    currentUser = Customer.Register(username2, password2, new Date(), Customer.GetGender(gender));
+                    System.out.print("Date of birth: ");
+                    String dob = sc.nextLine();
+                    currentUser = Customer.Register(username2, password2, dob, Customer.GetGender(gender));
                     break;
+                case "3":
+                    System.out.println("Goodbye!");
+                    return null;
                 default:
                     System.out.println("Please enter a valid number");
                     break;
@@ -60,47 +74,94 @@ public class Main {
         return currentUser;
     }
 
-    public static void UserInteraction(){
+    public static boolean UserInteraction(){
         Customer customer = (Customer)currentUser;
         System.out.println("\n1. View Products");
-        System.out.println("2. Add Product to Cart");
-        System.out.println("3. View Cart");
-        System.out.println("4. Checkout");
-        System.out.println("5. logout");
-        System.out.println("6. Exit");
+        System.out.println("2. Add to Cart");
+        System.out.println("3. Remove from Cart");
+        System.out.println("4. View Cart");
+        System.out.println("5. Make an order");
+        System.out.println("6. View orders");
+        System.out.println("7. Cancel an order");
+        System.out.println("8. logout");
+        System.out.println("9. Exit");
         System.out.print("Please select an option: ");
 
         String choice = sc.nextLine();
-        sc.nextLine();
 
-        switch(choice){
+        switch(choice) {
             case "1":
-                currentUser.ShowAllProduct();
+                currentUser.ShowAllProducts();
                 break;
             case "2":
-                System.out.print("Enter product code: ");
+                System.out.print("Please enter product code: ");
                 String str = sc.nextLine();
                 customer.AddToCart(str);
                 break;
             case "3":
+                System.out.print("Please enter the number of the item you want to remove: ");
+                int num = 0;
+                try {
+                    num = sc.nextInt();
+                    sc.nextLine();
+                } catch (Exception e) {
+                    System.out.println("Invalid number");
+                }
+                customer.getCart().removeProduct(num);
+            case "4":
                 customer.ViewCart();
                 break;
-            case "4":
-
-                break;
             case "5":
-                currentUser = null;
+                String address = null;
+                if (customer.getAddress() != null) {
+                    System.out.print("Press 1 if you'd like to use the address associated with your account: ");
+                    if(sc.nextLine().equals("1")){
+                        address = customer.getAddress();
+                    }
+                }
+                if (address == null) {
+                    System.out.println("Please enter address for delivery");
+                    address = sc.nextLine();
+                }
+                System.out.print("Press 1 to pay with a credit card. Press 2 to pay with a debit card. " +
+                        "Press 3 to pay using a cash app. Press 4 to pay on arrival");
+                try{
+                    customer.MakeAnOrder(sc.nextInt(),address);
+                }
+                catch(Exception e){
+                    System.out.println("Invalid input");
+                }
                 break;
             case "6":
+                customer.ViewOrders();
+                break;
+            case "7":
+                System.out.print("Please select which order you want to cancel: ");
+                customer.ViewOrders();
+                try{
+                    int i = sc.nextInt();
+                    customer.RemoveOrder(i,2);
+                    sc.nextLine();
+                }
+                catch(Exception e){
+                    System.out.println("Invalid number. Please enter the number of your order");
+                }
+                break;
+            case "8":
+                currentUser = null;
+                break;
+            case "9":
                 System.out.println("Goodbye!");
-                return;
+                currentUser = null;
+                return false;
             default:
                 System.out.println("Invalid option! Try again.");
                 break;
         }
+        return true;
     }
 
-    private static void AdminInteraction() {
+    private static boolean AdminInteraction() {
         Admin admin = (Admin)currentUser;
 
         System.out.println("\n1. Create a product");
@@ -152,7 +213,7 @@ public class Main {
                         admin.ShowAllUsers();
                         break;
                     case "2":
-                        admin.ShowAllProduct();
+                        admin.ShowAllProducts();
                         break;
                     case "3":
                         admin.ShowAllOrders();
@@ -164,11 +225,12 @@ public class Main {
                 break;
             case "7":
                 System.out.println("Goodbye!");
-                return;
+                currentUser = null;
+                return false;
             default:
                 System.out.println("Invalid option");
                 break;
         }
+        return true;
     }
-
 }

@@ -1,16 +1,14 @@
 package Classes;
 
-import java.util.Date;
-
 abstract public class User{
     private String username;
     private String password;
-    private Date dateOfBirth;
+    private String dateOfBirth;
 
     User(){
 
     }
-    User(String username, String password, Date dateOfBirth){
+    User(String username, String password, String dateOfBirth){
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
@@ -28,9 +26,9 @@ abstract public class User{
     }
     @Override
     public String toString(){
-        return "Username: " + username + "\nDate of birth: " + dateOfBirth;
+        return "\nUsername: " + username + "\nDate of birth: " + dateOfBirth;
     }
-    public void ShowAllProduct(){
+    public void ShowAllProducts(){
         Product[] productlist = Database.getProductList();
         for(int i=0;i<Database.getProductCount();i++){
             System.out.println(productlist[i].toString());

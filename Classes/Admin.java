@@ -1,13 +1,12 @@
 package Classes;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Admin extends User implements AdminCRUD {
     private double workingHours; //hours they work in a week
     private String role;
 
-    public Admin(String username, String password, Date dateOfBirth, String role, double workingHours) {
+    public Admin(String username, String password, String dateOfBirth, String role, double workingHours) {
         super(username, password, dateOfBirth);
         this.role = role;
         this.workingHours = workingHours;
@@ -66,7 +65,7 @@ public class Admin extends User implements AdminCRUD {
     public void ShowAllOrders(){
         Order[] orderlist = Database.getOrderList();
         for(int i = 0; i < Database.getOrderCount(); i++){
-            System.out.println(orderlist[i].toString());
+            orderlist[i].PrintOrder();
         }
     }
     @Override
@@ -88,7 +87,7 @@ interface AdminCRUD{
     void EditProduct(String productID, Category category);
     void DeleteProduct(String ProductID);
     void ShowAllOrders();
-    void ShowAllProduct();
+    void ShowAllProducts();
     void ShowAllUsers();
     void CreateCategory(String name);
     void DeleteCategory(String name);
