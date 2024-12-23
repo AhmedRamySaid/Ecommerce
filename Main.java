@@ -2,10 +2,14 @@ import Classes.*;
 
 import java.util.Scanner;
 
+import javafx.application.Application;
+
 public class Main {
+
     public static User currentUser = null;
     public static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
+
         //dummy data
         Customer.Register("Ramy", "1610", "16/10/2006", Customer.GetGender("1"));
         new Admin("Kareem", "1610", "10/5/2004", "Engineer", 40);
@@ -16,20 +20,21 @@ public class Main {
         new Product("Samsung TV", 2000, Database.getCategory("CTG100"),"This is a big Samsung TV");
         new Product("Cat food", 10, Database.getCategory("CTG101"),"The perfect meal for your cat!");
 
-        boolean UsingApplication = true;
-
-        while (UsingApplication) {
-            currentUser = LoginAndRegister();
-            if (currentUser == null) { UsingApplication = false; }
-            while (currentUser != null) {
-                if(currentUser.isAdmin()){
-                    UsingApplication = AdminInteraction();
-                }
-                else if (currentUser != null){
-                    UsingApplication = UserInteraction();
-                }
-            }
-        }
+        Application.launch(UserInterface.class, args);
+//        boolean UsingApplication = true;
+//
+//        while (UsingApplication) {
+//            currentUser = LoginAndRegister();
+//            if (currentUser == null) { UsingApplication = false; }
+//            while (currentUser != null) {
+//                if(currentUser.isAdmin()){
+//                    UsingApplication = AdminInteraction();
+//                }
+//                else if (currentUser != null){
+//                    UsingApplication = UserInteraction();
+//                }
+//            }
+//        }
     }
 
     public static User LoginAndRegister(){

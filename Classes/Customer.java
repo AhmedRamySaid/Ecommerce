@@ -35,6 +35,16 @@ public class Customer extends User {
         if (user != null) { System.out.println("This username is unavailable"); return null; }
         return new Customer(username, password, dateOfBirth, gender);
     }
+    public static Customer Register(String username, String password, String dateOfBirth, String genderSt){
+        Gender gender = null;
+        if (genderSt.equals("Man")) {
+            gender = Gender.Man;
+        }
+        else if (genderSt.equals("Woman")) {
+            gender = Gender.Woman;
+        }
+        return new Customer(username, password, dateOfBirth, gender);
+    }
     public void ViewOrders(){
         for(int i = 0; i < noOfOrders; i++){
             orders[i].PrintOrder();
