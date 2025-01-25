@@ -1,3 +1,5 @@
+package Main;
+
 import Classes.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -18,9 +20,9 @@ public class UserInterface extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Login/Signup Interface");
-        primaryStage.getIcons().add(new Image("shopping-bag6504-removebg-preview.png")); // Specify the correct path to your icon
+        primaryStage.getIcons().add(new Image("/Assets/shopping-bag6504-removebg-preview.png")); // Specify the correct path to your icon
 
-        Image logo = new Image(getClass().getResource("shopping-bag6504-removebg-preview.png").toExternalForm());
+        Image logo = new Image(getClass().getResource("/Assets/shopping-bag6504-removebg-preview.png").toExternalForm());
         ImageView logoView = new ImageView(logo);
         logoView.setFitWidth(300); // Set width
         logoView.setPreserveRatio(true);
@@ -31,14 +33,14 @@ public class UserInterface extends Application {
 
         Button signupButton = new Button("Signup");
 
-        // Main Layout
+        // Main.Main Layout
         VBox root = new VBox(20);
         root.setPadding(new Insets(20));
         root.getChildren().addAll(logoView,loginButton, signupButton);
 
         // Scene
         Scene mainScene = new Scene(root, 500, 400);
-        mainScene.getStylesheets().add(getClass().getResource("Login.css").toExternalForm());
+        mainScene.getStylesheets().add(getClass().getResource("/Assets/Login.css").toExternalForm());
 
 
         // Set Scene and Show Stage
@@ -120,15 +122,15 @@ public class UserInterface extends Application {
         GridPane.setConstraints(welcomeLabel, 0, 0);
 
         // Create the first VBox for View Products Button
-        VBox viewProductsBox = createButtonWithImage("View Products", "4129528.png");
+        VBox viewProductsBox = createButtonWithImage("View Products", "Assets/4129528.png");
         GridPane.setConstraints(viewProductsBox, 0, 2);
 
         // Create the second VBox for View Cart Button
-        VBox viewCartBox = createButtonWithImage("View Cart", "shopping-cart5929-removebg-preview.png");
+        VBox viewCartBox = createButtonWithImage("View Cart", "Assets/shopping-cart5929-removebg-preview.png");
         GridPane.setConstraints(viewCartBox, 1, 2);
 
         // Create the third VBox for Logout Button
-        VBox logoutBox = createButtonWithImage("Logout", "6188017.png");
+        VBox logoutBox = createButtonWithImage("Logout", "Assets/6188017.png");
         GridPane.setConstraints(logoutBox, 2, 2);
 
         // Add event handlers
@@ -147,7 +149,7 @@ public class UserInterface extends Application {
             currentUser = null;
             start(primaryStage);
         });
-        grid.getStylesheets().add(getClass().getResource("Customer.css").toExternalForm());
+        grid.getStylesheets().add(getClass().getResource("/Assets/Customer.css").toExternalForm());
 
 
         // Add components to the grid
@@ -209,7 +211,7 @@ public class UserInterface extends Application {
         });
 
         grid.getChildren().addAll(welcomeLabel, viewAll, makeProduct, logoutButton);
-        grid.getStylesheets().add(getClass().getResource("Admin.css").toExternalForm());
+        grid.getStylesheets().add(getClass().getResource("/Assets/Admin.css").toExternalForm());
         return grid;
 
 
@@ -265,7 +267,7 @@ public class UserInterface extends Application {
         Button backButton = new Button("Back");
         GridPane.setConstraints(backButton, 0, 2);
         backButton.setOnAction(e -> primaryStage.setScene(mainScene));
-        grid.getStylesheets().add(getClass().getResource("Login.css").toExternalForm());
+        grid.getStylesheets().add(getClass().getResource("/Assets/Login.css").toExternalForm());
 
 
         // Add nodes to GridPane
@@ -279,7 +281,7 @@ public class UserInterface extends Application {
         grid.setPadding(new Insets(20));
         grid.setVgap(10);
         grid.setHgap(10);
-        grid.getStylesheets().add(getClass().getResource("Login.css").toExternalForm());
+        grid.getStylesheets().add(getClass().getResource("/Assets/Login.css").toExternalForm());
         // Username Field
         Label usernameLabel = new Label("Username:");
         GridPane.setConstraints(usernameLabel, 0, 0);
@@ -431,7 +433,7 @@ public class UserInterface extends Application {
                 grid.getChildren().add(deleteProduct);
             }
         }
-        grid.getStylesheets().add(getClass().getResource("Customer.css").toExternalForm());
+        grid.getStylesheets().add(getClass().getResource("/Assets/Customer.css").toExternalForm());
         return scrollPane;
     }
 
@@ -510,7 +512,7 @@ public class UserInterface extends Application {
 
         grid.getChildren().addAll(backButton, nameLabel, nameInput, descLabel, descInput, priceLabel,
                 priceInput,categoryLabel, categoryComboBox, createProduct);
-        grid.getStylesheets().add(getClass().getResource("Admin.css").toExternalForm());
+        grid.getStylesheets().add(getClass().getResource("/Assets/Admin.css").toExternalForm());
 
         return grid;
     }
@@ -563,7 +565,7 @@ public class UserInterface extends Application {
             });
             grid.getChildren().add(removeFromCart);
         }
-        grid.getStylesheets().add(getClass().getResource("Customer.css").toExternalForm());
+        grid.getStylesheets().add(getClass().getResource("/Assets/Customer.css").toExternalForm());
 
         return scrollPane;
     }
@@ -593,7 +595,7 @@ public class UserInterface extends Application {
         GridPane.setConstraints(viewAllCategoriesButton, 0, 3);
         viewAllCategoriesButton.setOnAction( e->showAllOrdersPage(primaryStage, mainScene));
         grid.getChildren().add(viewAllCategoriesButton);
-        grid.getStylesheets().add(getClass().getResource("Admin.css").toExternalForm());
+        grid.getStylesheets().add(getClass().getResource("/Assets/Admin.css").toExternalForm());
 
         return grid;
     }
@@ -625,7 +627,7 @@ public class UserInterface extends Application {
             grid.getChildren().add(usernameLabel);
 
         }
-        grid.getStylesheets().add(getClass().getResource("Admin.css").toExternalForm());
+        grid.getStylesheets().add(getClass().getResource("/Assets/Admin.css").toExternalForm());
 
         return scrollPane;
     }
@@ -657,7 +659,7 @@ public class UserInterface extends Application {
             grid.getChildren().add(orderLabel);
         }
 
-        grid.getStylesheets().add(getClass().getResource("Customer.css").toExternalForm());
+        grid.getStylesheets().add(getClass().getResource("/Assets/Customer.css").toExternalForm());
 
         return scrollPane;
     }
