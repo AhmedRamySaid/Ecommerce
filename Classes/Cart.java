@@ -2,7 +2,6 @@ package Classes;
 import java.util.ArrayList;
 
 public class Cart {
-    //ArrayList is a dynamic array implemented by java :)
     private Product[] products;
     private int count;
     private double totalPrice;
@@ -24,11 +23,11 @@ public class Cart {
         if(product == null) { System.out.println("Product does not exist"); return; }
         products[count++] = product;
         totalPrice += product.getPrice();
-        System.out.println("Added " + product.getProductName() + " successfully");
+//        System.out.println("Added " + product.getProductName() + " successfully");
     }
     public void removeProduct(int index) {
-        if (index-- > count) { System.out.println("Invalid index"); return; }
-        System.out.println("Removed " + products[index].getProductName() + " successfully");
+//        if (index-- > count) { System.out.println("Invalid index"); return; }
+//        System.out.println("Removed " + products[index].getProductName() + " successfully");
         totalPrice -= products[index].getPrice();
         products[index] = null;
         for (int i = index; i < count; i++) {

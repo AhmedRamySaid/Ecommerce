@@ -5,10 +5,10 @@ abstract public class User{
     private String password;
     private String dateOfBirth;
 
-    protected User(){
+    public User(){
 
     }
-    protected User(String username, String password, String dateOfBirth){
+    public User(String username, String password, String dateOfBirth){
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
@@ -21,6 +21,15 @@ abstract public class User{
         System.out.println("Invalid password");
         return null;
     }
+    public static boolean Loginb(String username, String password){
+        User user = Database.getUser(username);
+        if (user == null){ System.out.println("Invalid username"); return false; }
+        if (user.password.equals(password)){ return true; }
+        System.out.println("Invalid password");
+        return false;
+
+    }
+
     public String getUsername(){
         return username;
     }

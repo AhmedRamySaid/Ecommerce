@@ -17,4 +17,8 @@ public class Category {
         return categoryName;
     }
     public String getID() {return CategoryID; }
+    @Override
+    public String toString() {
+        return categoryName;
+    }
 }

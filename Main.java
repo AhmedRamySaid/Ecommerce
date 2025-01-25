@@ -19,8 +19,11 @@ public class Main {
         new Product("IPhone", 200, Database.getCategory("CTG100"),"This is an IPhone 15");
         new Product("Samsung TV", 2000, Database.getCategory("CTG100"),"This is a big Samsung TV");
         new Product("Cat food", 10, Database.getCategory("CTG101"),"The perfect meal for your cat!");
+        new Product("Dog food", 200, Database.getCategory("CTG101"),"The perfect meal for your dog!");
 
         Application.launch(UserInterface.class, args);
+
+//      Console application
 //        boolean UsingApplication = true;
 //
 //        while (UsingApplication) {

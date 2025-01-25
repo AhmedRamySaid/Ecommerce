@@ -1,0 +1,61 @@
+.grid {
+    -fx-background-color: #f4f4f9;  /* Light background color */
+    -fx-padding: 20px;
+    -fx-vgap: 15px;
+    -fx-hgap: 15px;
+}
+
+/* Label Styling */
+.label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333; /* Dark text color */
+}
+
+/* Button Styling */
+.button {
+    -fx-background-color: #007bff; /* Green background */
+    -fx-text-fill: white; /* White text */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-pref-width: 100px;
+}
+
+.button:hover {
+    -fx-background-color: #0056b3; /* Darker green on hover */
+}
+
+/* Logout Button */
+.button.logout {
+    -fx-background-color: #f44336; /* Red background for logout */
+}
+
+.button.logout:hover {
+    -fx-background-color: #d32f2f; /* Darker red on hover */
+}
+
+
+/* Aligning Buttons and Text */
+.grid > .button {
+    -fx-halignment: center; /* Center-align buttons */
+}
+
+/* Welcome Label */
+.welcome-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4CAF50; /* Green color */
+    -fx-alignment: center;
+    -fx-padding: 10px;
+}
+.addtocart {
+    -fx-pref-width: 200px;  /* Set width */
+}
+.remove{
+    -fx-pref-width: 300px;
+}
+
+

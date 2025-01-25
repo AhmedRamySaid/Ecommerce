@@ -33,7 +33,7 @@ public class Order {
         else shippingAddress = customer.getAddress();
         setPaymentMethod(paymentmethod);
         SetShippingCost(10);
-        totalCost = CalculateTotal();
+        totalCost = CalculateTotal(customer);
         this.customer = customer;
         noOfProducts = customer.getCart().getCount();
         products = Product.CopyProductList(customer.getCart().getProducts(), noOfProducts);
@@ -105,8 +105,15 @@ public class Order {
         return totalCost;
     }
 
-    public double CalculateTotal() {
-        return 10;
+    public double CalculateTotal(Customer customer) {
+        double total = getShippingCost();
+        Product[] products = customer.getCart().getProducts();
+        for (Product product : products) {
+            if (product != null){
+                total += product.getPrice();
+            }
+        }
+        return total;
     }
 
     public String getShippingAddress() {

@@ -68,9 +68,11 @@ public class Database {
     public static int getUserCount(){ return userCount; }
     public static int getProductCount(){ return productCount; }
     public static int getOrderCount(){ return orderCount; }
+    public static int getCategoryCount(){ return categoryCount; }
     public static User[] getUserList(){ return userList; }
     public static Product[] getProductList(){ return productList;}
     public static Order[] getOrderList(){ return orderList; }
+    public static Category[] getCategoryList(){ return categoryList; }
     public static void addUser(User user){ userList[userCount++] = user; }
     public static void addProduct(Product product){ productList[productCount++] = product; }
     public static void addOrder(Order order) { orderList[orderCount++] = order; }

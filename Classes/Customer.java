@@ -9,8 +9,9 @@ public class Customer extends User {
     private Order[] orders;
     private int noOfOrders;
     public enum Gender {
-        Man, Woman
+        Male, Female
     }
+    public Customer() {}
 
     private Customer(String username, String password, String dateOfBirth, Gender gender){
         super(username,password,dateOfBirth);
@@ -38,10 +39,10 @@ public class Customer extends User {
     public static Customer Register(String username, String password, String dateOfBirth, String genderSt){
         Gender gender = null;
         if (genderSt.equals("Man")) {
-            gender = Gender.Man;
+            gender = Gender.Male;
         }
         else if (genderSt.equals("Woman")) {
-            gender = Gender.Woman;
+            gender = Gender.Female;
         }
         return new Customer(username, password, dateOfBirth, gender);
     }
@@ -83,10 +84,10 @@ public class Customer extends User {
     }
     public static Gender GetGender(String gender){
         if (gender.equals("1")){
-            return Gender.Man;
+            return Gender.Male;
         }
         else if (gender.equals("2")){
-            return Gender.Woman;
+            return Gender.Female;
         }
         else return null;
     }
