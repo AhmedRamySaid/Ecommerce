@@ -1,0 +1,94 @@
+.root {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 20;
+    -fx-alignment: center;
+}
+
+/* Style for buttons */
+.button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-background-color: #0056b3;
+    -fx-cursor: hand;
+}
+.image-view {
+    -fx-margin: 20 0;
+}
+.grid-pane {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+}
+
+/* Label styling */
+.label {
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+}
+
+/* TextField and PasswordField styling */
+.text-field, .password-field, .combo-box {
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-background-color: #f5f5f5;
+    -fx-border-radius: 5px;
+    -fx-border-color: #ccc;
+    -fx-focus-color: #5b9bd5;
+}
+
+.text-field:focused, .password-field:focused, .combo-box:focused {
+    -fx-border-color: #5b9bd5;
+}
+/* Button styling */
+.button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+
+}
+
+.button:hover {
+    -fx-background-color: #0056b3;
+    -fx-cursor: hand;
+}
+
+/* Error message styling */
+.error-message {
+    -fx-text-fill: red;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 0 0 0;
+}
+.alert {
+    -fx-font-size: 14px;
+    -fx-font-family: Arial;
+    -fx-padding: 20px;
+    -fx-background-color: #f8d7da;
+    -fx-text-fill: #721c24;
+}
+
+/* ComboBox styling */
+.combo-box {
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-background-color: #f5f5f5;
+    -fx-border-radius: 5px;
+    -fx-border-color: #ccc;
+}

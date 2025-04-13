@@ -1,0 +1,78 @@
+.grid {
+    -fx-background-color: #f4f4f9;  /* Light background color */
+    -fx-padding: 20px;
+    -fx-vgap: 15px;
+    -fx-hgap: 15px;
+}
+
+/* Label Styling */
+.label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333; /* Dark text color */
+}
+
+/* Button Styling */
+.button {
+    -fx-background-color: #05af06; /* Green background */
+    -fx-text-fill: white; /* White text */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-pref-width: 200px;
+}
+.combo-box {
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-background-color: #f5f5f5;
+    -fx-border-radius: 5px;
+    -fx-border-color: #ccc;
+}
+.text-field, .password-field, .combo-box {
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-background-color: #f5f5f5;
+    -fx-border-radius: 5px;
+    -fx-border-color: #ccc;
+    -fx-focus-color: #05af06;
+}
+
+.text-field:focused, .password-field:focused, .combo-box:focused {
+    -fx-border-color: #00ff04;
+}
+
+.button:hover {
+    -fx-background-color: #018f02; /* Darker green on hover */
+}
+
+.button.logout {
+    -fx-background-color: #f44336; /* Red background for logout */
+}
+
+.button.logout:hover {
+    -fx-background-color: #d32f2f; /* Darker red on hover */
+}
+
+
+/* Aligning Buttons and Text */
+.grid > .button {
+    -fx-halignment: center; /* Center-align buttons */
+}
+
+/* Welcome Label */
+.welcome-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4CAF50; /* Green color */
+    -fx-alignment: center;
+    -fx-padding: 10px;
+}
+.addtocart {
+    -fx-pref-width: 200px;  /* Set width */
+}
+.remove{
+    -fx-pref-width: 300px;
+}
+
