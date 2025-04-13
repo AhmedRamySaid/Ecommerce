@@ -13,7 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -327,7 +329,7 @@ public class UserInterface extends Application {
         // Signup Button
         Button signupButton = new Button("Signup");
         GridPane.setConstraints(signupButton, 1, 5);
-        signupButton.setOnAction(e -> {
+        signupButton.setOnAction(_ -> {
             String username = usernameInput.getText();
             String password = passwordInput.getText();
             String confirmPassword = confirmPasswordInput.getText();
@@ -338,9 +340,13 @@ public class UserInterface extends Application {
                 int month = Integer.parseInt(birthmonthField.getText().trim());
                 int day = Integer.parseInt(birthdayField.getText().trim());
 
+                if(year < Year.now().getValue() - 120 || year > Year.now().getValue() - 16){
+                    throw new DateTimeException("Invalid birth year");
+                }
+
                 dob = LocalDate.of(year, month, day);
-            } catch (Exception exception) { // If an exception is thrown, the date is invalid
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid date");
+            } catch (DateTimeException e) { // If an exception is thrown, the date is invalid
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid birth year");
                 alert.show();
                 return;
             }
@@ -348,18 +354,22 @@ public class UserInterface extends Application {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Make sure to fill in all fields");
                 alert.show();
             }
+            else if (password.length() < 8){
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Passwords must be at least 8 characters long");
+                alert.show();
+            }
             else if (!password.equals(confirmPassword)) { //make sure the passwords match
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Passwords do not match!");
                 alert.show();
             }
-            else if(Database.getUser(username) != null){ //make sure the username is unique
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Unavailable username");
+            else if(!NewDatabase.instance.isUnique(username)){ //make sure the username is unique
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Username is already taken");
                 alert.show();
             }
             else {
                 //if all conditions are met, create an account
                 Date date = Date.from(dob.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                currentUser = NewDatabase.instance.RegisterCustomer(username,password,date,gender);
+                currentUser = NewDatabase.instance.registerCustomer(username,password,date,gender);
                 if (currentUser != null){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Account created successfully");
                     alert.show();

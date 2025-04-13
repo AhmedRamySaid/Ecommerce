@@ -27,7 +27,8 @@ public class NewDatabase {
     }
 
     public User authenticate(String username, String password) {
-        String sql = """
+        String sql =
+            """
             SELECT * FROM [User] AS u
             LEFT JOIN Admin AS a ON a.Username = u.Username
             LEFT JOIN Customer AS c on c.Username = u.Username
@@ -38,23 +39,22 @@ public class NewDatabase {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, username);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    // Verify password first
-                    String storedHash = rs.getString("Password");
-                    if (!PasswordService.verifyPassword(password, storedHash)) return null;
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                // Verify password first
+                String storedHash = rs.getString("Password");
+                if (!PasswordService.verifyPassword(password, storedHash)) return null;
 
-                    // Check user type and create appropriate object
-                    Date dob = rs.getDate("DateOfBirth");
-                    String role = rs.getString("Role");
+                // Check user type and create appropriate object
+                Date dob = rs.getDate("DateOfBirth");
+                String role = rs.getString("Role");
 
-                    if (role != null) {
+                if (role != null) {
                         return new Admin(username, dob, role);
-                    } else {
-                        String gender = rs.getString("Gender");
-                        String address = rs.getString("Address");
-                        return new Customer(username, dob, Customer.StringToGender(gender), address);
-                    }
+                } else {
+                    String gender = rs.getString("Gender");
+                    String address = rs.getString("Address");
+                    return new Customer(username, dob, Customer.StringToGender(gender), address);
                 }
             }
         } catch (SQLException e) {
@@ -64,14 +64,16 @@ public class NewDatabase {
         return null; // User not found or error occurred
     }
 
-    public User RegisterCustomer(String username, String password, java.util.Date dateOfBirth,
-                                    String gender) {
-        String registerSQL = "INSERT INTO [User] (Username, Password, DateOfBirth) VALUES (?, ?, ?);" +
-                "INSERT INTO Customer (Username, Gender, Address) VALUES (?, ?, ?);";
-
+    public User registerCustomer(String username, String password, java.util.Date dateOfBirth,
+                                 String gender) {
+        String registerSQL =
+                """
+                INSERT INTO [User] (Username, Password, DateOfBirth) VALUES (?, ?, ?);
+                INSERT INTO Customer (Username, Gender, Address) VALUES (?, ?, ?);
+                """;
         try {
             PreparedStatement stmt = connection.prepareStatement(registerSQL);
-            // Start transaction
+            // Prevents AutoCommit to prevent unexpected behavior
             connection.setAutoCommit(false);
 
             try {
@@ -107,5 +109,31 @@ public class NewDatabase {
             return null;
         }
         return null;
+    }
+
+    public boolean isUnique(String username){
+        String searchSQL =
+                """
+                SELECT Username
+                FROM [User]
+                WHERE Username = ?
+                """;
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(searchSQL);
+            stmt.setString(1, username);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString("Username");
+                return name == null;
+            }
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Authentication error. Please restart your application");
+            alert.show();
+            return false;
+        }
+        return false;
     }
 }
