@@ -32,16 +32,6 @@ public class Customer extends User {
             orders[i] = orders[i+1];
         }
     }
-    public static Customer Register(String username, String password, Date dateOfBirth, String genderSt){
-        Gender gender = null;
-        if (genderSt.equals("Man")) {
-            gender = Gender.Male;
-        }
-        else if (genderSt.equals("Woman")) {
-            gender = Gender.Female;
-        }
-        return new Customer(username, dateOfBirth, gender, "");
-    }
 
     public static Gender StringToGender(String gender){
         if (gender.equals("Man")) {

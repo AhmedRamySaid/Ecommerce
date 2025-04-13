@@ -42,7 +42,7 @@ public class NewDatabase {
                 if (rs.next()) {
                     // Verify password first
                     String storedHash = rs.getString("Password");
-                    if (!storedHash.equals(password)) return null;
+                    if (!PasswordService.verifyPassword(password, storedHash)) return null;
 
                     // Check user type and create appropriate object
                     Date dob = rs.getDate("DateOfBirth");
@@ -58,8 +58,54 @@ public class NewDatabase {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Authentication error: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Authentication error: " + e.getMessage());
+            alert.show();
         }
         return null; // User not found or error occurred
+    }
+
+    public User RegisterCustomer(String username, String password, java.util.Date dateOfBirth,
+                                    String gender) {
+        String registerSQL = "INSERT INTO [User] (Username, Password, DateOfBirth) VALUES (?, ?, ?);" +
+                "INSERT INTO Customer (Username, Gender, Address) VALUES (?, ?, ?);";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(registerSQL);
+            // Start transaction
+            connection.setAutoCommit(false);
+
+            try {
+                // Hash password before storing
+                String hashedPassword = PasswordService.hashPassword(password);
+
+                // Set parameters for User table
+                stmt.setString(1, username);
+                stmt.setString(2, hashedPassword);
+                stmt.setDate(3, new java.sql.Date(dateOfBirth.getTime()));
+
+                // Set parameters for Customer table
+                stmt.setString(4, username);
+                stmt.setString(5, gender);
+                stmt.setString(6, "");
+
+                // Execute both inserts as a batch
+                stmt.executeUpdate();
+                connection.commit();
+                return new Customer(username, dateOfBirth, Customer.StringToGender(gender), "");
+
+            } catch (SQLException e) {
+                connection.rollback();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error. Failed to register. Please try again later");
+                alert.show();
+            } finally {
+                connection.setAutoCommit(true);
+            }
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Authentication error. Please restart your application");
+            alert.show();
+            return null;
+        }
+        return null;
     }
 }

@@ -359,10 +359,12 @@ public class UserInterface extends Application {
             else {
                 //if all conditions are met, create an account
                 Date date = Date.from(dob.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                currentUser = Customer.Register(username,password,date,gender);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Account created successfully");
-                alert.show();
-                showCustomerHomePage(primaryStage, mainScene);
+                currentUser = NewDatabase.instance.RegisterCustomer(username,password,date,gender);
+                if (currentUser != null){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Account created successfully");
+                    alert.show();
+                    showCustomerHomePage(primaryStage, mainScene);
+                }
             }
         });
 
