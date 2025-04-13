@@ -94,11 +94,6 @@ public class UserInterface extends Application {
         Scene productScene = new Scene(productListPage, 700, 500);
         primaryStage.setScene(productScene);
     }
-    public void showAllUsersPage(Stage primaryStage, Scene mainScene){
-        ScrollPane UserPage = showAllUsers(primaryStage, mainScene);
-        Scene scene = new Scene(UserPage, 700, 500);
-        primaryStage.setScene(scene);
-    }
     private void showAllPage(Stage primayStage, Scene mainScene){
         GridPane grid = viewAll(primayStage, mainScene);
         Scene scene = new Scene(grid, 700, 500);
@@ -592,11 +587,6 @@ public class UserInterface extends Application {
         backButton.setOnAction(e -> showAdminHomePage(primaryStage, mainScene));
         grid.getChildren().add(backButton);
 
-        Button viewAllUsersButton = new Button("View all users");
-        GridPane.setConstraints(viewAllUsersButton, 0, 1);
-        viewAllUsersButton.setOnAction(e -> showAllUsersPage(primaryStage, mainScene));
-        grid.getChildren().add(viewAllUsersButton);
-
         Button viewAllProductsButton = new Button("View all products");
         GridPane.setConstraints(viewAllProductsButton, 0, 2);
         viewAllProductsButton.setOnAction( e->showProductList(primaryStage, mainScene));
@@ -609,38 +599,6 @@ public class UserInterface extends Application {
         grid.getStylesheets().add(getClass().getResource("/kyra/me/ecommerce/Assets/Admin.css").toExternalForm());
 
         return grid;
-    }
-
-    private ScrollPane showAllUsers(Stage primaryStage, Scene mainScene) {
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(20));
-        grid.setVgap(10);
-        grid.setHgap(10);
-
-        ScrollPane scrollPane = new ScrollPane(grid);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setPrefViewportHeight(400);
-
-        User[] userlist = Database.getUserList();
-
-        // Back Button
-        Button backButton = new Button("Back");
-        GridPane.setConstraints(backButton, 0, 0);
-        backButton.setOnAction(e -> showAdminHomePage(primaryStage, mainScene));
-        grid.getChildren().add(backButton);
-
-        for(int i = 0; i < userlist.length; i++){
-            if (userlist[i] == null){
-                continue;
-            }
-            Label usernameLabel = new Label(userlist[i].toString());
-            GridPane.setConstraints(usernameLabel, 0, i+1);
-            grid.getChildren().add(usernameLabel);
-
-        }
-        grid.getStylesheets().add(getClass().getResource("/kyra/me/ecommerce/Assets/Admin.css").toExternalForm());
-
-        return scrollPane;
     }
 
     private ScrollPane showAllOrders(Stage primaryStage, Scene mainScene) {

@@ -12,7 +12,6 @@ abstract public class User{
     public User(String username, Date dateOfBirth){
         this.username = username;
         this.dateOfBirth = dateOfBirth;
-        Database.addUser(this);
     }
     public static User Login(String username, String password){
         return NewDatabase.instance.authenticate(username, password);
