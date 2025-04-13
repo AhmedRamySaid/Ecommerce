@@ -119,10 +119,4 @@ public class Order {
         return "Customer name: " + customer.getUsername() + "\nOrder ID: "+ orderID +"\nAddress: " + shippingAddress +
                 "\nTotal Amount: " + totalCost + "\nPayment Method: "+ paymentMethod + "\nOrder Statues: " + orderStatus;
     }
-    public void PrintOrder(){
-        System.out.println(this.toString());
-        for(int i = 0; i < products.length; i++){
-            System.out.println("1. " + this.toString() + "products: " + products[i].toString() + "\n");
-        }
-    }
 }
