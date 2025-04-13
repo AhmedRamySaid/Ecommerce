@@ -7,10 +7,10 @@ public class Order {
     private OrderStatus orderStatus;
     private PaymentMethod paymentMethod;
     private double shippingCost;
-    private double totalCost;
-    private String shippingAddress;
-    private Product[] products;
-    Customer customer;
+    private final double totalCost;
+    private final String shippingAddress;
+    private final Product[] products;
+    private final Customer customer;
 
     public enum OrderStatus {
         PENDING,

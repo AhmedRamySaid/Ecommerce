@@ -71,7 +71,6 @@ public class Admin extends User implements AdminCRUD {
     public void DeleteProduct(String productID){
         Product p = Database.getProduct(productID);
         if (p == null) { System.out.println("Product not found"); return; }
-        String st = p.getProductName();
         Database.removeProduct(productID);
     }
     @Override

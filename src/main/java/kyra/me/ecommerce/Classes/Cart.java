@@ -1,7 +1,7 @@
 package kyra.me.ecommerce.Classes;
 
 public class Cart {
-    private Product[] products;
+    private final Product[] products;
     private int count;
     private double totalPrice;
 

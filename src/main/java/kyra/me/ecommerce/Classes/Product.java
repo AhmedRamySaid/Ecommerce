@@ -15,9 +15,6 @@ public class Product {
         this.category = p.getCategory();
         this.productName = p.getProductName();
     }
-    public Product(){
-        this("", 0,new Category(""), null);
-    }
 
     public Product(String name, double price, Category category, String description){
         productName = name;
