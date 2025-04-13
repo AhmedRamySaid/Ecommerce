@@ -5,9 +5,9 @@ import javafx.scene.control.Alert;
 import java.sql.*;
 
 public class NewDatabase {
-    private static final String DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=Ecommerce;trustServerCertificate=true;";
-    private static final String USER = "Admin";
-    private static final String PASS = "1610";
+    private static final String DB_URL = System.getenv("DB_URL");
+    private static final String USER = System.getenv("DB_USER");
+    private static final String PASS = System.getenv("DB_PASS");
 
     public Connection connection;
     public static NewDatabase instance = new NewDatabase();
