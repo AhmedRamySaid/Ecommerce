@@ -99,8 +99,18 @@ public class UserInterface extends Application {
         Scene scene = new Scene(grid, 700, 500);
         primayStage.setScene(scene);
     }
+    private void showAdminCreationPage(Stage primayStage, Scene mainScene){
+        GridPane grid = CreateAdminCreationPage(primayStage, mainScene);
+        Scene scene = new Scene(grid, 700, 500);
+        primayStage.setScene(scene);
+    }
     private void showAdminProductPage(Stage primaryStage, Scene mainScene){
         GridPane grid = CreateProductCreationPage(primaryStage, mainScene);
+        Scene scene = new Scene(grid, 700, 500);
+        primaryStage.setScene(scene);
+    }
+    private void showAdminCategoryPage(Stage primaryStage, Scene mainScene){
+        GridPane grid = CreateCategoryCreationPage(primaryStage, mainScene);
         Scene scene = new Scene(grid, 700, 500);
         primaryStage.setScene(scene);
     }
@@ -182,40 +192,36 @@ public class UserInterface extends Application {
         Label welcomeLabel = new Label("Welcome, Admin " + currentUser.getUsername());
         GridPane.setConstraints(welcomeLabel, 0, 0);
 
-        Button viewAll = new Button("View all");
-        GridPane.setConstraints(viewAll, 0, 3);
+        Button viewAllButton = new Button("View all");
+        GridPane.setConstraints(viewAllButton, 0, 3);
 
-        Button makeProduct = new Button("Create a product");
-        makeProduct.getStyleClass().add("makeProduct");
+        Button creationPageButton = new Button("Create new item");
+        creationPageButton.getStyleClass().add("creationPageButton");
 
-        GridPane.setConstraints(makeProduct, 0, 4);
+        GridPane.setConstraints(creationPageButton, 0, 4);
 
 
         Button logoutButton = new Button("Logout");
         GridPane.setConstraints(logoutButton, 0, 5);
 
-        viewAll.setOnAction(e->{
+        viewAllButton.setOnAction(e->{
             showAllPage(primaryStage, mainScene);
         });
-        makeProduct.setOnAction(e->{
-            showAdminProductPage(primaryStage, mainScene);
+        creationPageButton.setOnAction(e->{
+            showAdminCreationPage(primaryStage, mainScene);
         });
         logoutButton.setOnAction(e->{
             currentUser = null;
             start(primaryStage);
         });
 
-        grid.getChildren().addAll(welcomeLabel, viewAll, makeProduct, logoutButton);
+        grid.getChildren().addAll(welcomeLabel, viewAllButton, creationPageButton, logoutButton);
         grid.getStylesheets().add(getClass().getResource("/kyra/me/ecommerce/Assets/Admin.css").toExternalForm());
         return grid;
-
-
     }
-
 
     // Method to create the Login Form
     private GridPane createLoginForm(Stage primaryStage, Scene mainScene) {
-
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(20));
         grid.setVgap(10);
@@ -385,9 +391,6 @@ public class UserInterface extends Application {
     }
 
     private ScrollPane showProductPage(Stage primaryStage, Scene mainScene) {
-
-
-
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(20));
         grid.setVgap(10);
@@ -422,7 +425,7 @@ public class UserInterface extends Application {
                 addToCart.getStyleClass().add("addtocart");
 
                 GridPane.setConstraints(addToCart, 1, i+1);
-                String str = productlist[i].getProductID();
+                String str = productlist[i].getID();
                 addToCart.setOnAction(e -> {
                     ((Customer)currentUser).AddToCart(str);
                 });
@@ -431,7 +434,7 @@ public class UserInterface extends Application {
             else {
                 Button deleteProduct = new Button("Delete product");
                 GridPane.setConstraints(deleteProduct, 1, i+1);
-                String str = productlist[i].getProductID();
+                String str = productlist[i].getID();
                 deleteProduct.setOnAction(e -> {
                     ((Admin)currentUser).DeleteProduct(str);
                     showAdminHomePage(primaryStage, mainScene);
@@ -482,25 +485,29 @@ public class UserInterface extends Application {
         categoryComboBox.setPromptText("Select Category");
         GridPane.setConstraints(categoryComboBox, 1, 4);
 
-        // Back Button
-        Button createProduct = new Button("Confirm");
-        GridPane.setConstraints(createProduct, 1, 5);
-        createProduct.setOnAction(e -> {
+        Button createProductButton = new Button("Confirm");
+        GridPane.setConstraints(createProductButton, 1, 5);
+        createProductButton.setOnAction(e -> {
             String productName = nameInput.getText();
             String description = descInput.getText();
-            Double price = 0.0;
-            if (description == null){
-                description = "";
-            }
+            double price;
+
             try {
-                price = Double.parseDouble(priceInput.getText().trim()); //removes extra spaces with .trim()
-            } catch (Exception exception) { // If an exception is thrown, the price is invalid
+                // Removes extra spaces
+                price = Double.parseDouble(priceInput.getText().trim());
+            } catch (NumberFormatException ex) {
+                // If an exception is thrown, the price is invalid
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid price");
                 alert.show();
                 return;
             }
-            if (productName == null) {
+
+            if (productName.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Name space can't be left empty");
+                alert.show();
+            }
+            else if (productName.length() > 100) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Product name must be less than 100 characters long");
                 alert.show();
             }
             else if (categoryComboBox.getValue() == null) {
@@ -508,16 +515,83 @@ public class UserInterface extends Application {
                 alert.show();
             }
             else {
-                //if all conditions are met, create a product
-                ((Admin)currentUser).CreateProduct(productName, price, categoryComboBox.getValue(), description);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Product created successfully");
-                alert.show();
+                // If all conditions are met, create a product
+                NewDatabase.instance.createProduct(productName, price, categoryComboBox.getValue(), description);
                 showAdminHomePage(primaryStage, mainScene);
             }
         });
 
         grid.getChildren().addAll(backButton, nameLabel, nameInput, descLabel, descInput, priceLabel,
-                priceInput,categoryLabel, categoryComboBox, createProduct);
+                priceInput,categoryLabel, categoryComboBox, createProductButton);
+        grid.getStylesheets().add(getClass().getResource("/kyra/me/ecommerce/Assets/Admin.css").toExternalForm());
+
+        return grid;
+    }
+
+    private GridPane CreateCategoryCreationPage(Stage primaryStage, Scene mainScene) {
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(20));
+        grid.setVgap(10);
+        grid.setHgap(10);
+
+        // Back Button
+        Button backButton = new Button("Back");
+        GridPane.setConstraints(backButton, 0, 0);
+        backButton.setOnAction(e -> showAdminHomePage(primaryStage, mainScene));
+
+        // Name Field
+        Label nameLabel = new Label("Category name:");
+        GridPane.setConstraints(nameLabel, 0, 1);
+        TextField nameInput = new TextField();
+        GridPane.setConstraints(nameInput, 1, 1);
+
+        Button createCategoryButton = new Button("Confirm");
+        GridPane.setConstraints(createCategoryButton, 1, 5);
+        createCategoryButton.setOnAction(e -> {
+            String productName = nameInput.getText();
+
+            if (productName.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Name space can't be left empty");
+                alert.show();
+            }
+            else if (productName.length() > 50) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Category name must be less than 50 characters long");
+                alert.show();
+            }
+            else {
+                // If all conditions are met, create a product
+                NewDatabase.instance.createCategory(productName);
+                showAdminHomePage(primaryStage, mainScene);
+            }
+        });
+
+        grid.getChildren().addAll(backButton, nameLabel, nameInput, createCategoryButton);
+        grid.getStylesheets().add(getClass().getResource("/kyra/me/ecommerce/Assets/Admin.css").toExternalForm());
+
+        return grid;
+    }
+
+    private GridPane CreateAdminCreationPage(Stage primaryStage, Scene mainScene) {
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(20));
+        grid.setVgap(10);
+        grid.setHgap(10);
+
+        // Back Button
+        Button backButton = new Button("Back");
+        GridPane.setConstraints(backButton, 0, 0);
+        backButton.setOnAction(e -> showAdminHomePage(primaryStage, mainScene));
+        grid.getChildren().add(backButton);
+
+        Button createAProductButton = new Button("Create a product");
+        GridPane.setConstraints(createAProductButton, 0, 2);
+        createAProductButton.setOnAction(e->showAdminProductPage(primaryStage, mainScene));
+        grid.getChildren().add(createAProductButton);
+
+        Button createACategoryButton = new Button("Create a category");
+        GridPane.setConstraints(createACategoryButton, 0, 3);
+        createACategoryButton.setOnAction(e->showAdminCategoryPage(primaryStage, mainScene));
+        grid.getChildren().add(createACategoryButton);
         grid.getStylesheets().add(getClass().getResource("/kyra/me/ecommerce/Assets/Admin.css").toExternalForm());
 
         return grid;

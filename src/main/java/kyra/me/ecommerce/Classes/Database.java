@@ -10,7 +10,7 @@ public class Database {
 
     public static Product getProduct(String productID){
         for (int i = 0; i < productCount; i++){
-            if (productList[i].getProductID().equals(productID)) return productList[i];
+            if (productList[i].getID().equals(productID)) return productList[i];
         }
         return null;
     }
@@ -35,7 +35,7 @@ public class Database {
     }
     public static void removeProduct(String productID){
         for (int i = 0; i < productCount; i++){
-            if (productList[i].getProductID().equals(productID)) {
+            if (productList[i].getID().equals(productID)) {
                 for (int j = i; j < productCount-1; j++){
                     productList[j] = productList[j+1];
                 }

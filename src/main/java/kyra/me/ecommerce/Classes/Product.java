@@ -2,15 +2,16 @@ package kyra.me.ecommerce.Classes;
 
 public class Product {
     private static int IDCounter = 100;
-    private double price;
     private final String productID;
+    private final String productName;
+    private double price;
     private String description;
     private Category category;
-    private final String productName;
+
     //Constructor
     private Product(Product p){
         this.price = p.getPrice();
-        this.productID = p.getProductID();
+        this.productID = p.getID();
         this.description = p.getDescription();
         this.category = p.getCategory();
         this.productName = p.getProductName();
@@ -33,7 +34,7 @@ public class Product {
         this.price = price;
     }
 
-    public String getProductID() {
+    public String getID() {
         return productID;
     }
 

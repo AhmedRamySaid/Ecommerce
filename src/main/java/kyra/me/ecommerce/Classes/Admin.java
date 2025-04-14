@@ -13,26 +13,7 @@ public class Admin extends User implements AdminCRUD {
     public String toString(){
         return "\nAccount type: Admin" + super.toString() + "\nRole: " + role;
     }
-
-    @Override
-    public void CreateProduct(String name, double price, String categoryID, String description){
-        Category category = Database.getCategory(categoryID);
-        if (category == null) {
-            System.out.println("Error. Category not found");
-            return;
-        }
-        Product p = new Product(name, price, category, description);
-        System.out.println("Success! Product ID: " + p.getProductID());
-    }
-    @Override
-    public void CreateProduct(String name, double price, Category category, String description){
-        if (category == null) {
-            System.out.println("Error. Category can't be null");
-            return;
-        }
-        Product p = new Product(name, price, category, description);
-        System.out.println("Success! Product ID: " + p.getProductID());
-    }
+    
     @Override
     public void CreateCategory(String name){
         Category c = new Category(name);
@@ -79,8 +60,6 @@ public class Admin extends User implements AdminCRUD {
     }
 }
 interface AdminCRUD{
-    void CreateProduct(String name, double price, String categoryID, String description);
-    void CreateProduct(String name, double price, Category category, String description);
     void EditProduct(String productID, String price_description_category, int choice);
     void DeleteProduct(String ProductID);
     void CreateCategory(String name);

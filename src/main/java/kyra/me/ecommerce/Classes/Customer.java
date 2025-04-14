@@ -56,13 +56,13 @@ public class Customer extends User {
     public void AddToCart(String str){
         Product product = Database.getProduct(str);
         if (product == null) { System.out.println("This product does not exist"); return; }
-        cart.addProduct(product.getProductID());
+        cart.addProduct(product.getID());
     }
     public void ViewCart(){
         Product[] cartproducts = cart.getProducts();
         if(cartproducts[0] == null) { System.out.println("Your cart is empty"); return; }
         for(int i = 0; i < cart.getCount(); i++){
-            System.out.println("\n" + (i+1) + ". Name: " + cartproducts[i].getProductName() + "ID: " + cartproducts[i].getProductID());
+            System.out.println("\n" + (i+1) + ". Name: " + cartproducts[i].getProductName() + "ID: " + cartproducts[i].getID());
         }
         System.out.println("Total price: " + cart.getTotalPrice() + "\n");
     }

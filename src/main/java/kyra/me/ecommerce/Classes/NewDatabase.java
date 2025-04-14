@@ -111,6 +111,89 @@ public class NewDatabase {
         return null;
     }
 
+    public void createProduct(String name, double price, Category category, String description) {
+        String registerSQL =
+                """
+                INSERT INTO Product (ProductID, ProductName, Description, Price, CategoryID)
+                VALUES (?,?,?,?,?);
+                """;
+        try {
+            PreparedStatement stmt = connection.prepareStatement(registerSQL);
+            // Prevents AutoCommit to prevent unexpected behavior
+            connection.setAutoCommit(false);
+
+            try {
+                // Create Product Object
+                Product product = new Product(name, price, category, description);
+
+                // Set parameters for Product table
+                stmt.setString(1, product.getID());
+                stmt.setString(2, name);
+                stmt.setString(3, description);
+                stmt.setDouble(4, price);
+                stmt.setString(5, category.getID());
+
+                // Execute both inserts as a batch
+                stmt.executeUpdate();
+                connection.commit();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully created new product");
+                alert.show();
+
+            } catch (SQLException e) {
+                connection.rollback();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error. Failed to create product. Please try again later");
+                alert.show();
+            } finally {
+                connection.setAutoCommit(true);
+            }
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Authentication error. Please restart your application");
+            alert.show();
+        }
+    }
+
+    public void createCategory(String name) {
+        String registerSQL =
+                """
+                INSERT INTO CATEGORY (categoryid, categoryname)
+                VALUES (?,?);
+                """;
+        try {
+            PreparedStatement stmt = connection.prepareStatement(registerSQL);
+            // Prevents AutoCommit to prevent unexpected behavior
+            connection.setAutoCommit(false);
+
+            try {
+                // Create Category Object
+                Category category = new Category(name);
+
+                // Set parameters for Category table
+                stmt.setString(1, category.getID());
+                stmt.setString(2, name);
+
+                // Execute both inserts as a batch
+                stmt.executeUpdate();
+                connection.commit();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully created new category");
+                alert.show();
+
+            } catch (SQLException e) {
+                connection.rollback();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error. Failed to create Category. Please try again later");
+                alert.show();
+            } finally {
+                connection.setAutoCommit(true);
+            }
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Authentication error. Please restart your application");
+            alert.show();
+        }
+    }
+
     public boolean isUnique(String username){
         String searchSQL =
                 """
