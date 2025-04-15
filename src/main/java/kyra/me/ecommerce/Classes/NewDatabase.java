@@ -215,24 +215,23 @@ public class NewDatabase {
             stmt.setString(1, username);
 
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                String name = rs.getString("Username");
-                return name == null;
-            }
+            return !rs.next();
 
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Authentication error. Please restart your application");
             alert.show();
             return false;
         }
-        return false;
     }
 
     public void initialize() {
-        String countSQL =
+        String countProduct =
                 """
                 SELECT count(ProductID) AS PRODUCTNUMBER
                 FROM Product
+                """;
+        String countCategory =
+                """
                 SELECT count(CategoryID) AS CATEGORYNUMBER
                 FROM Category
                 """;
@@ -246,18 +245,23 @@ public class NewDatabase {
                 """;
 
         try {
-            PreparedStatement stmt = connection.prepareStatement(countSQL);
+            PreparedStatement stmt = connection.prepareStatement(countProduct);
 
             ResultSet rs = stmt.executeQuery();
-            // Executes and gets the result from each part of the query
+            // Executes and gets the result from each query
 
             int productCount = 0;
-            int categoryCount = 0;
             if (rs.next()) {
                 productCount = rs.getInt("PRODUCTNUMBER");
             }
+
+            stmt = connection.prepareStatement(countCategory);
+
+            rs = stmt.executeQuery();
+
+            int categoryCount = 0;
             if (rs.next()) {
-                categoryCount += rs.getInt("CATEGORYNUMBER");
+                categoryCount = rs.getInt("CATEGORYNUMBER");
             }
 
             Product.IDCounter += productCount;
