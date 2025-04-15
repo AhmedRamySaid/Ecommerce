@@ -1,14 +1,16 @@
 package kyra.me.ecommerce.Classes;
 
 public class Category {
-    private static int IDCount = 100;
+    public static int IDCounter = 100;
     private final String categoryName;
     private final String CategoryID;
 
     public Category(String categoryName){
-        CategoryID = "CTG" + IDCount++ ;
-        this.categoryName=categoryName;
-        Database.addCategory(this);
+        this(categoryName, "CTG" + IDCounter++);
+    }
+    public Category(String categoryName, String categoryID){
+        this.categoryName = categoryName;
+        this.CategoryID = categoryID;
     }
     public String getName(){
         return categoryName;
