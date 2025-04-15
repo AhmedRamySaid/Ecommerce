@@ -140,6 +140,7 @@ public class NewDatabase {
                 stmt.setString(5, category.getID());
 
                 // Execute both inserts as a batch
+                productList.put(product.getID(), product);
                 stmt.executeUpdate();
                 connection.commit();
 
@@ -182,6 +183,7 @@ public class NewDatabase {
                 // Execute both inserts as a batch
                 stmt.executeUpdate();
                 connection.commit();
+                categoryList.put(category.getID(), category);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully created new category");
                 alert.show();
