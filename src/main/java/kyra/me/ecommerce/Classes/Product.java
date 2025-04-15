@@ -22,7 +22,7 @@ public class Product {
         this.price = price;
         this.description = description;
         this.category = category;
-        this.productID = "PR" + category.getID() +IDCounter++;
+        this.productID = "PR" + IDCounter++ + category.getID();
         Database.addProduct(this);
     }
     //Setters and Getters

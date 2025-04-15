@@ -56,8 +56,6 @@ public class Database {
         }
     }
 
-    public static int getProductCount(){ return productCount; }
-    public static int getOrderCount(){ return orderCount; }
     public static int getCategoryCount(){ return categoryCount; }
     public static Product[] getProductList(){ return productList;}
     public static Order[] getOrderList(){ return orderList; }
