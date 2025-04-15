@@ -1,5 +1,6 @@
 package kyra.me.ecommerce.Main;
 
+import javafx.scene.text.Font;
 import kyra.me.ecommerce.Classes.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -69,49 +70,49 @@ public class UserInterface extends Application {
 
     private void showCustomerHomePage(Stage primaryStage, Scene mainScene) {
         GridPane CustomerHomepage = createCustomerHomepage(primaryStage, mainScene);
-        Scene homepageScene = new Scene(CustomerHomepage, 600, 400);
+        Scene homepageScene = new Scene(CustomerHomepage, 500, 400);
         primaryStage.setScene(homepageScene);
     }
 
     private void showAdminHomePage(Stage primaryStage, Scene mainScene){
         GridPane AdminHomepage = createAdminHomepage(primaryStage, mainScene);
-        Scene homepageScene = new Scene(AdminHomepage, 400, 300);
+        Scene homepageScene = new Scene(AdminHomepage, 500, 400);
         primaryStage.setScene(homepageScene);
     }
     private void showProductList(Stage primaryStage, Scene mainScene){
         ScrollPane productListPage = showProductPage(primaryStage, mainScene);
-        Scene productScene = new Scene(productListPage, 700, 400);
+        Scene productScene = new Scene(productListPage, 500, 400);
         primaryStage.setScene(productScene);
     }
 
     private void showAllOrdersPage(Stage primaryStage, Scene mainScene){
         ScrollPane orderListPage = showAllOrders(primaryStage, mainScene);
-        Scene orderScene = new Scene(orderListPage, 700, 500);
+        Scene orderScene = new Scene(orderListPage, 500, 400);
         primaryStage.setScene(orderScene);
     }
     private void showOrderProductList(Stage primaryStage, Scene mainScene){
         ScrollPane productListPage = showCartPage(primaryStage,mainScene);
-        Scene productScene = new Scene(productListPage, 700, 500);
+        Scene productScene = new Scene(productListPage, 500, 400);
         primaryStage.setScene(productScene);
     }
     private void showAllPage(Stage primayStage, Scene mainScene){
         GridPane grid = viewAll(primayStage, mainScene);
-        Scene scene = new Scene(grid, 700, 500);
+        Scene scene = new Scene(grid, 500, 400);
         primayStage.setScene(scene);
     }
     private void showAdminCreationPage(Stage primayStage, Scene mainScene){
         GridPane grid = CreateAdminCreationPage(primayStage, mainScene);
-        Scene scene = new Scene(grid, 700, 500);
+        Scene scene = new Scene(grid, 500, 400);
         primayStage.setScene(scene);
     }
     private void showAdminProductPage(Stage primaryStage, Scene mainScene){
         GridPane grid = CreateProductCreationPage(primaryStage, mainScene);
-        Scene scene = new Scene(grid, 700, 500);
+        Scene scene = new Scene(grid, 500, 400);
         primaryStage.setScene(scene);
     }
     private void showAdminCategoryPage(Stage primaryStage, Scene mainScene){
         GridPane grid = CreateCategoryCreationPage(primaryStage, mainScene);
-        Scene scene = new Scene(grid, 700, 500);
+        Scene scene = new Scene(grid, 500, 400);
         primaryStage.setScene(scene);
     }
 
@@ -432,14 +433,15 @@ public class UserInterface extends Application {
                 grid.getChildren().add(addToCart);
             }
             else {
-                Button deleteProduct = new Button("Delete product");
-                GridPane.setConstraints(deleteProduct, 1, i+1);
+                Button deleteProductButton = new Button("Delete");
+                deleteProductButton.setMinWidth(100);
+                GridPane.setConstraints(deleteProductButton, 1, i+1);
                 String str = productList[i].getID();
-                deleteProduct.setOnAction(e -> {
+                deleteProductButton.setOnAction(e -> {
                     ((Admin)currentUser).DeleteProduct(str);
                     showAdminHomePage(primaryStage, mainScene);
                 });
-                grid.getChildren().add(deleteProduct);
+                grid.getChildren().add(deleteProductButton);
             }
         }
         grid.getStylesheets().add(getClass().getResource("/kyra/me/ecommerce/Assets/Customer.css").toExternalForm());
