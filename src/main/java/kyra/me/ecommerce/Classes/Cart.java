@@ -18,7 +18,7 @@ public class Cart {
         return totalPrice;
     }
     public void addProduct(String productID) {
-        Product product = Database.getProduct(productID);
+        Product product = NewDatabase.instance.getProduct(productID);
         if(product == null) { System.out.println("Product does not exist"); return; }
         products[count++] = product;
         totalPrice += product.getPrice();

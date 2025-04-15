@@ -12,7 +12,6 @@ public class Customer extends User {
     public enum Gender {
         Male, Female
     }
-    public Customer() {}
 
     public Customer(String username, Date dateOfBirth, Gender gender, String address){
         super(username, dateOfBirth);
@@ -54,7 +53,7 @@ public class Customer extends User {
         return cart;
     }
     public void AddToCart(String str){
-        Product product = Database.getProduct(str);
+        Product product = NewDatabase.instance.getProduct(str);
         if (product == null) { System.out.println("This product does not exist"); return; }
         cart.addProduct(product.getID());
     }
@@ -69,14 +68,5 @@ public class Customer extends User {
     public void Checkout(int paymentmethod, String address){
         Order order = new Order(paymentmethod, address, this);
         System.out.println("Order success! Your order ID is " + order.getOrderID());
-    }
-    public static Gender GetGender(String gender){
-        if (gender.equals("1")){
-            return Gender.Male;
-        }
-        else if (gender.equals("2")){
-            return Gender.Female;
-        }
-        else return null;
     }
 }

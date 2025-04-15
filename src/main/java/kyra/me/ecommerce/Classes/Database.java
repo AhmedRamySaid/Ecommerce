@@ -8,31 +8,6 @@ public class Database {
     private static int orderCount = 0;
     private static int categoryCount = 0;
 
-    public static Product getProduct(String productID){
-        for (int i = 0; i < productCount; i++){
-            if (productList[i].getID().equals(productID)) return productList[i];
-        }
-        return null;
-    }
-
-    public static Category getCategory(String categoryID){
-        for (int i = 0; i < categoryCount; i++){
-            if (categoryList[i].getID().equals(categoryID)) return categoryList[i];
-        }
-        return null;
-    }
-
-    public static void removeOrder(String orderID){
-        for (int i = 0; i < orderCount; i++){
-            if (orderList[i].getOrderID().equals(orderID)) {
-                for(int j = i; j < orderCount-1; j++){
-                    productList[j] = productList[j+1];
-                }
-                productList[--orderCount] = null;
-                break;
-            }
-        }
-    }
     public static void removeProduct(String productID){
         for (int i = 0; i < productCount; i++){
             if (productList[i].getID().equals(productID)) {

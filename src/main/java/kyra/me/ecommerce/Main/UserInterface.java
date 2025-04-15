@@ -400,7 +400,7 @@ public class UserInterface extends Application {
         scrollPane.setFitToWidth(true);
         scrollPane.setPrefViewportHeight(400);
 
-        Product[] productlist = Database.getProductList();
+        Product[] productList = NewDatabase.instance.getProductList();
 
         // Back Button
         Button backButton = new Button("Back");
@@ -413,11 +413,11 @@ public class UserInterface extends Application {
         }
         grid.getChildren().add(backButton);
 
-        for(int i = 0; i < productlist.length; i++){
-            if (productlist[i] == null){
+        for(int i = 0; i < productList.length; i++){
+            if (productList[i] == null){
                 continue;
             }
-            Label usernameLabel = new Label(productlist[i].toString());
+            Label usernameLabel = new Label(productList[i].toString());
             GridPane.setConstraints(usernameLabel, 0, i+1);
             grid.getChildren().add(usernameLabel);
             if (!currentUser.isAdmin()){
@@ -425,7 +425,7 @@ public class UserInterface extends Application {
                 addToCart.getStyleClass().add("addtocart");
 
                 GridPane.setConstraints(addToCart, 1, i+1);
-                String str = productlist[i].getID();
+                String str = productList[i].getID();
                 addToCart.setOnAction(e -> {
                     ((Customer)currentUser).AddToCart(str);
                 });
@@ -434,7 +434,7 @@ public class UserInterface extends Application {
             else {
                 Button deleteProduct = new Button("Delete product");
                 GridPane.setConstraints(deleteProduct, 1, i+1);
-                String str = productlist[i].getID();
+                String str = productList[i].getID();
                 deleteProduct.setOnAction(e -> {
                     ((Admin)currentUser).DeleteProduct(str);
                     showAdminHomePage(primaryStage, mainScene);
@@ -479,8 +479,9 @@ public class UserInterface extends Application {
         Label categoryLabel = new Label("Category:");
         GridPane.setConstraints(categoryLabel, 0, 4);
         ComboBox<Category> categoryComboBox = new ComboBox<>();
-        for(int i = 0; i < Database.getCategoryCount(); i++){
-            categoryComboBox.getItems().add(Database.getCategoryList()[i]);
+
+        for(Category category: NewDatabase.instance.getCategoryList()){
+            categoryComboBox.getItems().add(category);
         }
         categoryComboBox.setPromptText("Select Category");
         GridPane.setConstraints(categoryComboBox, 1, 4);
@@ -685,7 +686,7 @@ public class UserInterface extends Application {
         scrollPane.setFitToWidth(true);
         scrollPane.setPrefViewportHeight(400);
 
-        Order[] orderlist = Database.getOrderList();
+        Order[] orderList = Database.getOrderList();
 
         // Back Button
         Button backButton = new Button("Back");
@@ -693,11 +694,11 @@ public class UserInterface extends Application {
         backButton.setOnAction(e -> showAdminHomePage(primaryStage, mainScene));
         grid.getChildren().add(backButton);
 
-        for(int i = 0; i < orderlist.length; i++){
-            if (orderlist[i] == null){
+        for(int i = 0; i < orderList.length; i++){
+            if (orderList[i] == null){
                 continue;
             }
-            Label orderLabel = new Label(orderlist[i].toString());
+            Label orderLabel = new Label(orderList[i].toString());
             GridPane.setConstraints(orderLabel, 0, i+1);
             grid.getChildren().add(orderLabel);
         }

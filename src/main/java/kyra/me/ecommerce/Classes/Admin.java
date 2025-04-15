@@ -3,7 +3,7 @@ package kyra.me.ecommerce.Classes;
 import java.util.Date;
 
 public class Admin extends User implements AdminCRUD {
-    private String role;
+    private final String role;
 
     public Admin(String username, Date dateOfBirth, String role) {
         super(username, dateOfBirth);
@@ -13,7 +13,7 @@ public class Admin extends User implements AdminCRUD {
     public String toString(){
         return "\nAccount type: Admin" + super.toString() + "\nRole: " + role;
     }
-    
+
     @Override
     public void CreateCategory(String name){
         Category c = new Category(name);
@@ -21,7 +21,7 @@ public class Admin extends User implements AdminCRUD {
     }
     @Override
     public void EditProduct (String productID, String price_description_category, int choice){
-        Product p = Database.getProduct(productID);
+        Product p = NewDatabase.instance.getProduct(productID);
         if (p == null) { System.out.println("Product not found"); return; }
         switch (choice) {
             case 1:
@@ -38,7 +38,7 @@ public class Admin extends User implements AdminCRUD {
                 System.out.println("Description changed successfully");
                 break;
             case 3:
-                Category c = Database.getCategory(price_description_category);
+                Category c = NewDatabase.instance.getCategory(price_description_category);
                 if (c == null) { System.out.println("Category not found"); return; }
                 p.setCategory(c);
                 System.out.println("Category changed successfully");
@@ -50,7 +50,7 @@ public class Admin extends User implements AdminCRUD {
     }
     @Override
     public void DeleteProduct(String productID){
-        Product p = Database.getProduct(productID);
+        Product p = NewDatabase.instance.getProduct(productID);
         if (p == null) { System.out.println("Product not found"); return; }
         Database.removeProduct(productID);
     }

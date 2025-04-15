@@ -1,7 +1,7 @@
 package kyra.me.ecommerce.Classes;
 
 public class Product {
-    private static int IDCounter = 100;
+    public static int IDCounter = 100;
     private final String productID;
     private final String productName;
     private double price;
@@ -18,12 +18,15 @@ public class Product {
     }
 
     public Product(String name, double price, Category category, String description){
+        this(name, price, category, description, "PR" + IDCounter++ + category.getID());
+    }
+
+    public Product(String name, double price, Category category, String description, String productID){
         productName = name;
         this.price = price;
         this.description = description;
         this.category = category;
-        this.productID = "PR" + IDCounter++ + category.getID();
-        Database.addProduct(this);
+        this.productID = productID;
     }
     //Setters and Getters
     public double getPrice() {
