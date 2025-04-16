@@ -24,7 +24,7 @@ public class UserInterface extends Application {
     static User currentUser = null;
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Login/Signup Interface");
+        primaryStage.setTitle("Shopia");
         Image logo = new Image(getClass().getResource("/kyra/me/ecommerce/Assets/bag_icon.png").toExternalForm());
         primaryStage.getIcons().add(logo);
 
